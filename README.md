@@ -11,3 +11,8 @@
 - [ ] 简书
 - [ ] 思否（Segmentfault）
 - [ ] 博客园
+
+### 安装
+
+本脚本发布于 Greasy Fork，您可以通过以下链接安装相关脚本
+[CSDNock](https://greasyfork.org/zh-CN/scripts/493011-csdnock)
