@@ -16,3 +16,7 @@
 
 本脚本发布于 Greasy Fork，您可以通过以下链接安装相关脚本
 [CSDNock](https://greasyfork.org/zh-CN/scripts/493011-csdnock)
+
+### 功能相关
+
+所有脚本的详细功能描述，已移动到[此处](https://github.com/Exisi/BlogNock/tree/main/nock)
