@@ -19,4 +19,4 @@
 
 ### 功能相关
 
-所有脚本的详细功能描述，已移动到[此处](https://github.com/Exisi/BlogNock/tree/main/nock)
+所有脚本的详细功能描述，已移动到[此处](https://github.com/Exisi/BlogNock/tree/main/nock/README.md)
