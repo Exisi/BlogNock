@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CSDNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.1
+// @version      0.0.2
 // @description  BlogNock系列，CSDN文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -41,9 +41,13 @@
 				icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAFCUlEQVRoge1YWU8bVxQ+nrFnxuMVs5iyLy4GK0AILQ1QaCqBVBLx0ERtUiEUIar2F+UxQjwgdVFQk1ZVFaFEbSpKaEExiwsB0pYQGiiLsT1je2bsqc4E0pJAwdcW6cN8yEKyfO79vrPdcy/o0KFDhw4dOgAMJD5QVRXGf54uowyGpIGikhnxo6qCrCSYfHf207KyQtFgSI2akWTPL7787lzg10c+jmOuGch8cSBkRQELb+65crnrMwBIyUFEQoLbIWduTtY1k4nI/FBgpCMRcWhzKzgCAOup2FIkG9pslpAgRPsoKnPRwFSSZQX/92ZlObZStifZFD13Y/j220+e/HWP4xiSJV4CppWZY7tbWhpGq73lW6nWCFFEEL4aTyAWi2uiMgEpLkNujmsdRZAsRyyEogxJk4nOiAjYjbKJMSrEfEgNHQ5biGWZDxKJzHRfRUmA3W4NkdoTC8nPz0larZZIIpEgXeI5kskkGI3GXnde9lPSNYiFIAoL81awTlItzBeB3crptAUrK4sjpGukJaTaWz5H03SvohCntuYEUYz1VVQUPUqHS5oRcSuve0oehsNiH0lU0AYjarGYxXPvvBlIh0taQhDd3e+O8zwrRqOxlFMMG0UkEu1vbj49mi6PtIUgOjqaRyRJvhqXpGOLwXa7sxPqq6urmmo841tJl0NGhFR7K7Y6O1puy5LcIwjR/xSjjSKKAsFguK+mpnLuwvn2XzLBgXhEOQhLS8vWH+5NtAeDYSfPc0MvCtqticu465kG32RrS8PiocRSTNOMCtnDT2P+iomJ2SWjkQaK+ifoWNhFRe62i+93/ngksZOatQ7Dysoas70dctE0/ZKf8Lt4XGJmZhbyMr1vRiNy5+79U37/fB2AOmSx8FpX2jv50cMMY4R4XNbOjeJi9/JHVy7cOZTYq0qtb779vml2ZtFnt1sHMJ0EQQSWZfCM0EhJcQnCEQFYlgWGMcHOTuSqzcaHPv3kw6/+N0IwEuPj000ul+M6RiEWjYG3uhxqT1WB252t/UYUojD/8HeYmAwATgI8b4adnXAvDp8f91+69cqFLC4t24eHRy7abJYBvDFGIiK0tjbA2bfqD7RdXV2HW1/fBUmSgec52NgM9tfVeqfOd7Xta8MnXuyjow9aTCbjAHaoUEiA+jrvoSIQBQV50PVem1Y/OCw67LbrgcCS7/HjP9O6aqYlZG7+N9fa2kYeehZbq8vlgPb2N460Ky0tgNraKhxP4NnlTB30++dPp8MlLSELC394KIoexOJGIfX1VVohHweNjT7gLZyWYmYzByur60WvTMja+mY+y5q0FLHZLFBZWXJs2yynHUqKXtPaMaZlJCxYZ2YXic8XYiHLy6tcVIxxeMihV7OznRq5VID1AuqzwlZVdXBzI+g6cSGCEOMlSf4cOxVeVVMVgcjOcTzvmxgVQRStpHyInwrjksShANhtlXuvjnvfHQWsK+1DU1o7NxiwziSOlA/ROTI9vZA3NvbgrKQoN400rZE3m1nAsURNqoB/RwHtYnjahwXNEbiGqsIlj6dksbOjeepEHrHvj081BUORm067FZKqqg2DghCD7e2w5prjUEA7FMNxrBaR3Vq7MTkZ6KsoL8T7e0oPEURCEomE0UhTIMn7Hx2O23r/DXnfGqr28BeXZO5EhHg8pYt+/3wPRRlihNl5AFSQJJXJz8/d8tVUbmRoUR06dOjQoeNoAMDfddMStWBVXeEAAAAASUVORK5CYII=",
 			},
 		},
+		source_redirct: {
+			enabled: GM_getValue("source_redirct", true),
+			selector: [".article-type-img", ".article-source-link a"],
+		},
 	};
 
-	const setModal = `<dialog class="modal-dialog"> <div class="modal-setting" onClick="event.cancelBubble = true"> <div class="modal-header"> <h3>功能设置</h3> <span class="btn-dialog-close">×</span> </div> <div class="modal-body"> <div class="setting-item"> <span>替换文章标识图片（原创/转载/翻译）</span> <span> <input type="checkbox" id="feature-mark-copyright" aria-nock="copyright"/> <label for="feature-mark-copyright"></label> </span> </div> <div class="setting-item"> <span> 文章显示时间优化 </span> <span> <input type="checkbox" id="feature-mark-datetime" aria-nock="datetime" /> <label for="feature-mark-datetime"></label> </span> </div> <div class="setting-item"> <span> 文章阅读时长 </span> <span> <input type="checkbox" id="feature-mark-readtime" aria-nock="readtime"/> <label for="feature-mark-readtime"></label> </span> </div> <div class="setting-item"> <span> 移除底部推荐的 CSDN 下载 </span> <span> <input type="checkbox" id="feature-recommend-type-download" aria-nock="recommend_type_download"/> <label for="feature-recommend-type-download"></label> </span> </div> </div> </div> </dialog>`;
+	const setModal = `<dialog class="modal-dialog"> <div class="modal-setting" onClick="event.cancelBubble = true"> <div class="modal-header"> <h3>功能设置</h3> <span class="btn-dialog-close">×</span> </div> <div class="modal-body"> <div class="setting-item"> <span>替换文章标识图片（原创/转载/翻译）</span> <span> <input type="checkbox" id="feature-mark-copyright" aria-nock="copyright"/> <label for="feature-mark-copyright"></label> </span> </div> <div class="setting-item"> <span> 文章显示时间优化 </span> <span> <input type="checkbox" id="feature-mark-datetime" aria-nock="datetime" /> <label for="feature-mark-datetime"></label> </span> </div> <div class="setting-item"> <span> 文章阅读时长 </span> <span> <input type="checkbox" id="feature-mark-readtime" aria-nock="readtime"/> <label for="feature-mark-readtime"></label> </span> </div> <div class="setting-item"> <span> 移除底部推荐的 CSDN 下载 </span> <span> <input type="checkbox" id="feature-recommend-type-download" aria-nock="recommend_type_download"/> <label for="feature-recommend-type-download"></label> </span> </div> <div class="setting-item"> <span> 自动转载原链重定向 </span> <span> <input type="checkbox" id="feature-source-redirct" aria-nock="source_redirct"/> <label for="feature-source-redirct"></label> </span> </div> </div> </div> </dialog>`;
 	const setStyle = `@keyframes fall { 0% { transform: translate(0%, -100%); opacity: 0; } 100% { transform: translate(0%, 0%); opacity: 1; } } .setting-item input[type=checkbox] { height: 0; width: 0; display: none; } .setting-item label { cursor: pointer; text-indent: -9999px; width: 40px; height: 20px; background: pink; display: block; border-radius: 100px; position: relative; } .setting-item label:after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; background: #fff; border-radius: 90px; transition: 0.2s; } .setting-item input:checked+label { background: #57a; } .setting-item input:checked+label:after { left: calc(100% - 2px); transform: translateX(-100%); } .setting-item label:active:after { width: 28px; } .modal-dialog { border: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; min-width: 100vw; min-height: 100vh; height: 100%; background-color: rgba(0, 0, 0, 0.4); } .modal-setting { width: 450px; margin: auto; background-color: #ffffff; border-radius: 5px; padding: 20px; margin-top: 40px; position: relative; box-sizing: border-box; animation: fall 0.5s ease-in-out; } .modal-header { border-bottom: 1px solid #000000; } .modal-header h3 { padding: 10px 0; margin: 0; } .modal-header span { font-size: 24px; color: #ccc; position: absolute; right: 5px; top: 0; cursor: pointer; } .setting-item { margin: 10px 0; display: flex; justify-content: space-between; }`;
 
 	const dStyle = document.createElement("style");
@@ -137,6 +141,16 @@
 			document.querySelector(features.mark.readtime.selector[2]).scrollIntoView(false)
 		);
 		document.querySelector(features.mark.readtime.selector[1]).appendChild(readbox);
+	}
+
+	if (features.source_redirct.enabled) {
+		const copyright = document.querySelector(features.source_redirct.selector[0]);
+		const sourceUrl = document.querySelector(features.source_redirct.selector[1]);
+		const iconUrl = copyright.getAttribute("src");
+		const type = iconUrl.substring(iconUrl.lastIndexOf("/") + 1, iconUrl.lastIndexOf("."));
+		if (type === "reprint") {
+			window.location.href = sourceUrl;
+		}
 	}
 
 	function calculateTimeAgo(datetime) {
