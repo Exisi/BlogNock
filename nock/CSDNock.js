@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CSDNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.2
+// @version      0.0.3
 // @description  BlogNock系列，CSDN文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -33,11 +33,11 @@
 			},
 			datetime: {
 				enabled: GM_getValue("datetime", true),
-				selector: [".time", "up-time"],
+				selector: [".time", ".up-time"],
 			},
 			readtime: {
 				enabled: GM_getValue("readtime", true),
-				selector: ["#content_views", ".article-bar-top", ".blog-content-box"],
+				selector: ["#content_views", ".bar-content", ".blog-content-box"],
 				icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAFCUlEQVRoge1YWU8bVxQ+nrFnxuMVs5iyLy4GK0AILQ1QaCqBVBLx0ERtUiEUIar2F+UxQjwgdVFQk1ZVFaFEbSpKaEExiwsB0pYQGiiLsT1je2bsqc4E0pJAwdcW6cN8yEKyfO79vrPdcy/o0KFDhw4dOgAMJD5QVRXGf54uowyGpIGikhnxo6qCrCSYfHf207KyQtFgSI2akWTPL7787lzg10c+jmOuGch8cSBkRQELb+65crnrMwBIyUFEQoLbIWduTtY1k4nI/FBgpCMRcWhzKzgCAOup2FIkG9pslpAgRPsoKnPRwFSSZQX/92ZlObZStifZFD13Y/j220+e/HWP4xiSJV4CppWZY7tbWhpGq73lW6nWCFFEEL4aTyAWi2uiMgEpLkNujmsdRZAsRyyEogxJk4nOiAjYjbKJMSrEfEgNHQ5biGWZDxKJzHRfRUmA3W4NkdoTC8nPz0larZZIIpEgXeI5kskkGI3GXnde9lPSNYiFIAoL81awTlItzBeB3crptAUrK4sjpGukJaTaWz5H03SvohCntuYEUYz1VVQUPUqHS5oRcSuve0oehsNiH0lU0AYjarGYxXPvvBlIh0taQhDd3e+O8zwrRqOxlFMMG0UkEu1vbj49mi6PtIUgOjqaRyRJvhqXpGOLwXa7sxPqq6urmmo841tJl0NGhFR7K7Y6O1puy5LcIwjR/xSjjSKKAsFguK+mpnLuwvn2XzLBgXhEOQhLS8vWH+5NtAeDYSfPc0MvCtqticu465kG32RrS8PiocRSTNOMCtnDT2P+iomJ2SWjkQaK+ifoWNhFRe62i+93/ngksZOatQ7Dysoas70dctE0/ZKf8Lt4XGJmZhbyMr1vRiNy5+79U37/fB2AOmSx8FpX2jv50cMMY4R4XNbOjeJi9/JHVy7cOZTYq0qtb779vml2ZtFnt1sHMJ0EQQSWZfCM0EhJcQnCEQFYlgWGMcHOTuSqzcaHPv3kw6/+N0IwEuPj000ul+M6RiEWjYG3uhxqT1WB252t/UYUojD/8HeYmAwATgI8b4adnXAvDp8f91+69cqFLC4t24eHRy7abJYBvDFGIiK0tjbA2bfqD7RdXV2HW1/fBUmSgec52NgM9tfVeqfOd7Xta8MnXuyjow9aTCbjAHaoUEiA+jrvoSIQBQV50PVem1Y/OCw67LbrgcCS7/HjP9O6aqYlZG7+N9fa2kYeehZbq8vlgPb2N460Ky0tgNraKhxP4NnlTB30++dPp8MlLSELC394KIoexOJGIfX1VVohHweNjT7gLZyWYmYzByur60WvTMja+mY+y5q0FLHZLFBZWXJs2yynHUqKXtPaMaZlJCxYZ2YXic8XYiHLy6tcVIxxeMihV7OznRq5VID1AuqzwlZVdXBzI+g6cSGCEOMlSf4cOxVeVVMVgcjOcTzvmxgVQRStpHyInwrjksShANhtlXuvjnvfHQWsK+1DU1o7NxiwziSOlA/ROTI9vZA3NvbgrKQoN400rZE3m1nAsURNqoB/RwHtYnjahwXNEbiGqsIlj6dksbOjeepEHrHvj081BUORm067FZKqqg2DghCD7e2w5prjUEA7FMNxrBaR3Vq7MTkZ6KsoL8T7e0oPEURCEomE0UhTIMn7Hx2O23r/DXnfGqr28BeXZO5EhHg8pYt+/3wPRRlihNl5AFSQJJXJz8/d8tVUbmRoUR06dOjQoeNoAMDfddMStWBVXeEAAAAASUVORK5CYII=",
 			},
 		},
@@ -102,12 +102,35 @@
 
 	if (features.mark.datetime.enabled) {
 		const postTime = document.querySelector(features.mark.datetime.selector[0]);
-		const regex = /\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}/g;
-		const rawDateTime = postTime.innerText.match(regex)[0];
+		const updateTime = document.querySelector(features.mark.datetime.selector[1]);
 
-		const timeAgo = calculateTimeAgo(rawDateTime);
+		const regex = /\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}/g;
+		let rawPostTime = postTime.innerText.match(regex)[0];
+		let rawUpdateTime = updateTime.innerText.match(regex)[0];
+
+		[rawPostTime, rawUpdateTime] = [rawPostTime, rawUpdateTime].sort(
+			(a, b) => new Date(a) - new Date(b)
+		);
+
+		const postTimeAgo = calculateTimeAgo(rawPostTime);
+		const updateTimeAgo = calculateTimeAgo(rawUpdateTime);
+
+		postTime.style.cursor = "pointer";
 		postTime.style.textDecoration = "underline";
-		postTime.innerText = `${rawDateTime}（${timeAgo}）`;
+		postTime.innerText = `${rawPostTime}（${postTimeAgo}发布）`;
+		postTime.setAttribute("data-time", rawPostTime);
+		postTime.addEventListener("click", (e) => {
+			const rawTime = e.target.getAttribute("data-time");
+
+			if (rawTime == rawPostTime) {
+				e.target.setAttribute("data-time", rawUpdateTime);
+				e.target.innerText = `${rawUpdateTime}（${updateTimeAgo}更新）`;
+				return;
+			}
+
+			e.target.setAttribute("data-time", rawPostTime);
+			e.target.innerText = `${rawPostTime}（${postTimeAgo}发布）`;
+		});
 	}
 
 	if (features.mark.readtime.enabled) {
