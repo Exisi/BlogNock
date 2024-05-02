@@ -21,4 +21,6 @@
 - 知乎文章按钮位置调整
 - 登录提示自动隐藏
 
+### 安装
+
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)
