@@ -10,4 +10,15 @@
 
 ### 安装
 
-[点我安装](https://greasyfork.org/zh-CN/scripts/493011-csdnock)
+[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/493011-csdnock)
+
+## ZhihuNock
+
+### 功能
+
+- 文章显示时间优化
+- 文章阅读时长
+- 知乎文章按钮位置调整
+- 登录提示自动隐藏
+
+[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)
