@@ -7,7 +7,7 @@
 预计支持以下博客，施工中...
 
 - [x] CSDN
-- [ ] 知乎
+- [x] 知乎
 - [ ] 简书
 - [ ] 思否（Segmentfault）
 - [ ] 博客园
@@ -15,7 +15,9 @@
 ### 安装
 
 本脚本发布于 Greasy Fork，您可以通过以下链接安装相关脚本
-[CSDNock](https://greasyfork.org/zh-CN/scripts/493011-csdnock)
+
+- [CSDNock](https://greasyfork.org/zh-CN/scripts/493011-csdnock)
+- [ZhihuNock](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)
 
 ### 功能相关
 
