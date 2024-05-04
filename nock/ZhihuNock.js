@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ZhiHuNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.1
+// @version      0.0.2
 // @description  BlogNock系列，知乎文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -29,7 +29,12 @@
 		},
 		action_btn_adjust: {
 			enabled: GM_getValue("action_btn_adjust", true),
-			selector: [".ContentItem-actions", ".BottomActions-CommentBtn", ".Post-Main"],
+			selector: [
+				".ContentItem-actions",
+				".BottomActions-CommentBtn",
+				".Post-Main",
+				".AppHeader-profileAvatar",
+			],
 		},
 		hidden_login: {
 			enabled: GM_getValue("login_hidden", true),
@@ -163,15 +168,24 @@
 
 		const plainItemActionBtn = clonedContentItemActions.children.item(0);
 		const plainIcon = plainItemActionBtn.querySelector("span");
-		plainItemActionBtn.addEventListener("click", () => {
+
+		const plainActionBtnEvent = () => {
+			const loginStatus = document.querySelector(features.action_btn_adjust.selector[3]);
+
+			if (!loginStatus) {
+				return;
+			}
+
 			const text =
 				plainItemActionBtn.innerText.replace(/[^\u4e00-\u9fa5]/g, "") == "喜欢"
 					? "​取消喜欢"
 					: "喜欢";
-			console.log(plainItemActionBtn.innerText.replace(/[^\u4e00-\u9fa5]/g, ""));
+
 			plainItemActionBtn.innerHTML = text;
 			plainItemActionBtn.prepend(plainIcon);
-		});
+		};
+
+		contentItemActions.children.item(3).addEventListener("click", () => plainActionBtnEvent());
 
 		const actionCommentBtn = document.querySelector(features.action_btn_adjust.selector[1]);
 		const clonedActionCommentBtn = actionCommentBtn.cloneNode(true);
@@ -206,12 +220,13 @@
 		clonedContentItemActions.style.margin = 0;
 		clonedContentItemActions.style.padding = 0;
 		clonedContentItemActions.style.opacity = 0;
+		clonedContentItemActions.style.backgroundColor = "#00000000";
 		clonedContentItemActions.style.flexDirection = "column";
 		clonedContentItemActions.style.transition = "opacity 0.55s ease-in-out";
 		actionCommentBtn.parentNode.appendChild(clonedContentItemActions);
 
 		const postMain = document.querySelector(features.action_btn_adjust.selector[2]);
-		const postMainHeight = postMain.offsetHeight + 370;
+		const postMainHeight = postMain.offsetHeight + 40;
 
 		window.addEventListener("scroll", () => {
 			const scrollTop = document.documentElement.scrollTop;
