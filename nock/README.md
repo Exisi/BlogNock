@@ -1,4 +1,4 @@
-## CSDNock
+## CSDNock（CSDN）
 
 ### 功能
 
@@ -12,7 +12,7 @@
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/493011-csdnock)
 
-## ZhihuNock
+## ZhihuNock（知乎)
 
 ### 功能
 
@@ -24,3 +24,18 @@
 ### 安装
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)
+
+## JianShuNock（简书）
+
+### 功能
+
+- 文章显示时间优化
+- 文章阅读时长
+- 隐藏底部固定评论框
+- 隐藏移动端推荐
+- 隐藏不相关的文章推荐
+- 隐藏右侧热门故事
+
+### 安装
+
+[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494159-jianshunock)
