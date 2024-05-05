@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JianShuNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.2
+// @version      0.0.3
 // @description  BlogNock系列，简书文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -264,6 +264,7 @@
 	if (features.hidden.copyright_text.enabled) {
 		document.addEventListener("copy", (e) => {
 			e.preventDefault();
+			e.stopImmediatePropagation();
 			const selectedText = window.getSelection().toString();
 			e.clipboardData.setData("text/plain", selectedText);
 		});
