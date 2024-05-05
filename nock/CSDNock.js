@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CSDNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.4
+// @version      0.0.5
 // @description  BlogNock系列，CSDN文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -116,6 +116,7 @@
 		const updateTimeAgo = calculateTimeAgo(rawUpdateTime);
 
 		postTime.style.cursor = "pointer";
+		postTime.style.fontSize = "14px";
 		postTime.style.textDecoration = "underline";
 		postTime.innerText = `${rawPostTime}（${postTimeAgo}发布）`;
 		postTime.setAttribute("data-time", rawPostTime);
