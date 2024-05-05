@@ -8,7 +8,7 @@
 
 - [x] CSDN
 - [x] 知乎
-- [ ] 简书
+- [x] 简书
 - [ ] 思否（Segmentfault）
 - [ ] 博客园
 
@@ -18,6 +18,7 @@
 
 - [CSDNock](https://greasyfork.org/zh-CN/scripts/493011-csdnock)
 - [ZhihuNock](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)
+- [JianShuNock](https://greasyfork.org/zh-CN/scripts/494159-jianshunock)
 
 ### 功能相关
 
