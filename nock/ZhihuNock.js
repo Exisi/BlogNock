@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ZhiHuNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.3
+// @version      0.0.4
 // @description  BlogNock系列，知乎文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -38,7 +38,12 @@
 		},
 		hidden_login: {
 			enabled: GM_getValue("login_hidden", true),
-			selector: [".Modal-closeButton", ".ZDI--Xmark16", "svg[width='26'][height='8']"],
+			selector: [
+				".AppHeader-profileAvatar",
+				".Modal-closeButton",
+				".ZDI--Xmark16",
+				"svg[width='26'][height='8']",
+			],
 		},
 	};
 
@@ -242,7 +247,7 @@
 		});
 	}
 
-	if (features.hidden_login.enabled) {
+	if (features.hidden_login.enabled && !document.querySelector(features.hidden_login.selector[0])) {
 		const createObserver = (selector, callback) => {
 			const observer = new MutationObserver(() => {
 				const closeBtn = document.querySelector(selector);
@@ -258,18 +263,18 @@
 			observer.observe(document.body, { childList: true, subtree: true });
 		};
 
-		createObserver(features.hidden_login.selector[0], () => {
-			document.querySelector(features.hidden_login.selector[0]).click();
-		});
-
 		createObserver(features.hidden_login.selector[1], () => {
-			document.querySelector(
-				features.hidden_login.selector[1]
-			).parentNode.parentNode.parentNode.style.display = "none";
+			document.querySelector(features.hidden_login.selector[1]).click();
 		});
 
 		createObserver(features.hidden_login.selector[2], () => {
-			document.querySelector(features.hidden_login.selector[2]).closest("div").style.display =
+			document.querySelector(
+				features.hidden_login.selector[2]
+			).parentNode.parentNode.parentNode.style.display = "none";
+		});
+
+		createObserver(features.hidden_login.selector[3], () => {
+			document.querySelector(features.hidden_login.selector[3]).closest("div").style.display =
 				"none";
 		});
 	}
