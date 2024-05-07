@@ -19,7 +19,7 @@
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/493011-csdnock)
 
-## ZhihuNock（知乎)
+## ZhihuNock（知乎-专栏)
 
 ### 功能
 
@@ -27,6 +27,15 @@
 - 文章阅读时长
 - 知乎文章按钮位置调整
 - 登录提示自动隐藏
+
+## ZhiHuNock-Q（知乎-问答)
+
+### 功能
+
+- 问答显示时间
+- 登录提示自动隐藏
+- 隐藏左侧移动端推荐
+- 隐藏左侧知乎页脚
 
 ### 安装
 
