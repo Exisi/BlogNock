@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CSDNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.6
+// @version      0.0.7
 // @description  BlogNock系列，CSDN文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -43,20 +43,40 @@
 		},
 		source_redirct: {
 			enabled: GM_getValue("source_redirct", true),
-			selector: [".article-type-img", ".article-source-link a"],
+			selector: [".href-article-edit", ".article-type-img", ".article-source-link a"],
 		},
 		unfixed_comment: {
 			enabled: GM_getValue("fixed_comment", true),
 			selector: [".left-toolbox"],
 		},
+		hidden_login: {
+			enabled: GM_getValue("hidden_login", true),
+			selector: [".hasAvatar", ".passport-login-container", ".passport-login-box>img"],
+		},
+		allow_copy: {
+			enabled: GM_getValue("allow_copy", true),
+			selector: ["#content_views", "pre", "code"],
+		},
+		unfold_code: {
+			enabled: GM_getValue("unfold_code", true),
+			selector: [".hide-preCode-bt"],
+		},
+		allow_copy_with_btn: {
+			enabled: GM_getValue("allow_copy_with_btn", true),
+			selector: [".hljs-button.signin.active"],
+		},
 		hidden: {
+			article_search_tip: {
+				enabled: GM_getValue("article_search_tip", true),
+				selector: ["#articleSearchTip"],
+			},
 			side_toolbar: {
 				enabled: GM_getValue("side_toolbar", true),
 				selector: [".csdn-side-toolbar"],
 			},
 			login_tips: {
 				enabled: GM_getValue("login_tips", true),
-				selector: [".passport-login-tip-container", ".passport-login-container"],
+				selector: [".passport-login-tip-container"],
 			},
 			collection_tips: {
 				enabled: GM_getValue("collection_tips", true),
@@ -65,6 +85,10 @@
 			write_guide_pic: {
 				enabled: GM_getValue("write_guide_pic", true),
 				selector: ["#asideWriteGuide"],
+			},
+			side_google_ad: {
+				enabled: GM_getValue("side_google_ad", true),
+				selector: [".box-shadow.mb8"],
 			},
 			recommend_vote: {
 				enabled: GM_getValue("recommend_vote", true),
@@ -77,13 +101,15 @@
 		},
 	};
 
-	const setModal = `<div class="modal-dialog"> <div class="modal-setting" onClick="event.cancelBubble = true"> <div class="modal-header"> <h3>功能设置</h3> <span class="btn-dialog-close">×</span> </div> <div class="modal-body"> <div class="setting-item"> <span>替换文章标识图片（原创/转载/翻译）</span> <span> <input type="checkbox" id="feature-mark-copyright" aria-nock="copyright" /> <label for="feature-mark-copyright"></label> </span> </div> <div class="setting-item"> <span> 文章显示时间优化 </span> <span> <input type="checkbox" id="feature-mark-datetime" aria-nock="datetime" /> <label for="feature-mark-datetime"></label> </span> </div> <div class="setting-item"> <span> 文章阅读时长 </span> <span> <input type="checkbox" id="feature-mark-readtime" aria-nock="readtime" /> <label for="feature-mark-readtime"></label> </span> </div> <div class="setting-item"> <span> 移除底部推荐的 CSDN 下载 </span> <span> <input type="checkbox" id="feature-recommend-type-download" aria-nock="recommend_type_download" /> <label for="feature-recommend-type-download"></label> </span> </div> <div class="setting-item"> <span> 自动转载原链重定向 </span> <span> <input type="checkbox" id="feature-source-redirct" aria-nock="source_redirct" /> <label for="feature-source-redirct"></label> </span> </div> <div class="setting-item"> <span> 取消固定文章工具栏 </span> <span> <input type="checkbox" id="feature-unfixed-comment" aria-nock="unfixed_comment" /> <label for="feature-unfixed-comment"></label> </span> </div> <hr /> <div class="setting-item"> <span> 隐藏右侧工具栏 </span> <span> <input type="checkbox" id="feature-side-toolbar" aria-nock="side_toolbar" /> <label for="feature-side-toolbar"></label> </span> </div> <div class="setting-item"> <span> 隐藏登录提示 </span> <span> <input type="checkbox" id="feature-login-tips" aria-nock="login_tips" /> <label for="feature-login-tips"></label> </span> </div> <div class="setting-item"> <span> 隐藏收藏提示 </span> <span> <input type="checkbox" id="feature-collection-tips" aria-nock="collection_tips" /> <label for="feature-collection-tips"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧活动图片 </span> <span> <input type="checkbox" id="feature-write-guide-pic" aria-nock="write_guide_pic" /> <label for="feature-write-guide-pic"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧推荐评分 </span> <span> <input type="checkbox" id="feature-recommend-vote" aria-nock="recommend_vote" /> <label for="feature-recommend-vote"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧最新评论 </span> <span> <input type="checkbox" id="feature-latest-comment" aria-nock="latest_comment" /> <label for="feature-latest-comment"></label> </span> </div> </div> </div> </div>`;
-	const setStyle = `@keyframes fall { 0% { transform: translate(0%, -100%); opacity: 0; } 100% { transform: translate(0%, 0%); opacity: 1; } } .setting-item input[type=checkbox] { height: 0; width: 0; display: none; } .setting-item label { cursor: pointer; text-indent: -9999px; width: 40px; height: 20px; background: pink; display: block; border-radius: 100px; position: relative; } .setting-item label:after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; background: #fff; border-radius: 90px; transition: 0.2s; } .setting-item input:checked+label { background: #57a; } .setting-item input:checked+label:after { left: calc(100% - 2px); transform: translateX(-100%); } .setting-item label:active:after { width: 28px; } .modal-dialog { display:none; border: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; min-width: 100vw; min-height: 100vh; height: 100%; background-color: rgba(0, 0, 0, 0.4); } .modal-setting { width: 450px; margin: auto; background-color: #ffffff; border-radius: 5px; padding: 20px; margin-top: 40px; position: relative; box-sizing: border-box; animation: fall 0.5s ease-in-out; } .modal-header { border-bottom: 1px solid #000000; } .modal-header h3 { padding: 10px 0; margin: 0; } .modal-header span { font-size: 24px; color: #ccc; position: absolute; right: 5px; top: 0; cursor: pointer; } .setting-item { margin: 10px 0; display: flex; justify-content: space-between; }`;
+	const setModal = `<div class="modal-dialog"> <div class="modal-setting" onClick="event.cancelBubble = true"> <div class="modal-header"> <h3>功能设置</h3> <span class="btn-dialog-close">×</span> </div> <div class="modal-body"> <div class="setting-item"> <span>替换文章标识图片（原创/转载/翻译）</span> <span> <input type="checkbox" id="feature-mark-copyright" aria-nock="copyright" /> <label for="feature-mark-copyright"></label> </span> </div> <div class="setting-item"> <span> 文章显示时间优化 </span> <span> <input type="checkbox" id="feature-mark-datetime" aria-nock="datetime" /> <label for="feature-mark-datetime"></label> </span> </div> <div class="setting-item"> <span> 文章阅读时长 </span> <span> <input type="checkbox" id="feature-mark-readtime" aria-nock="readtime" /> <label for="feature-mark-readtime"></label> </span> </div> <div class="setting-item"> <span> 移除底部推荐的 CSDN 下载 </span> <span> <input type="checkbox" id="feature-recommend-type-download" aria-nock="recommend_type_download" /> <label for="feature-recommend-type-download"></label> </span> </div> <div class="setting-item"> <span> 自动转载原链重定向 </span> <span> <input type="checkbox" id="feature-source-redirct" aria-nock="source_redirct" /> <label for="feature-source-redirct"></label> </span> </div> <div class="setting-item"> <span> 取消固定文章工具栏 </span> <span> <input type="checkbox" id="feature-unfixed-comment" aria-nock="unfixed_comment" /> <label for="feature-unfixed-comment"></label> </span> </div> <div class="setting-item"> <span> 关闭界面加载后的登录模态框 </span> <span> <input type="checkbox" id="feature-hidden-login" aria-nock="hidden_login" /> <label for="feature-hidden-login"></label> </span> </div> <hr /> <div class="setting-item"> <span> 文章自由复制 </span> <span> <input type="checkbox" id="feature-allow-copy" aria-nock="allow_copy" /> <label for="feature-allow-copy"></label> </span> </div> <div class="setting-item"> <span> 代码自动展开 </span> <span> <input type="checkbox" id="feature-unfold-code" aria-nock="unfold_code" /> <label for="feature-unfold-code"></label> </span> </div> <div class="setting-item"> <span> 允许一键复制代码 </span> <span> <input type="checkbox" id="feature-allow-copy-with-btn" aria-nock="allow_copy_with_btn" /> <label for="feature-allow-copy-with-btn"></label> </span> </div> <hr /> <div class="setting-item"> <span> 隐藏文本复制的工具栏 </span> <span> <input type="checkbox" id="feature-article-search-tip" aria-nock="article_search_tip" /> <label for="feature-article-search-tip"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧工具栏 </span> <span> <input type="checkbox" id="feature-side-toolbar" aria-nock="side_toolbar" /> <label for="feature-side-toolbar"></label> </span> </div> <div class="setting-item"> <span> 隐藏登录提示 </span> <span> <input type="checkbox" id="feature-login-tips" aria-nock="login_tips" /> <label for="feature-login-tips"></label> </span> </div> <div class="setting-item"> <span> 隐藏收藏提示 </span> <span> <input type="checkbox" id="feature-collection-tips" aria-nock="collection_tips" /> <label for="feature-collection-tips"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧活动图片 </span> <span> <input type="checkbox" id="feature-write-guide-pic" aria-nock="write_guide_pic" /> <label for="feature-write-guide-pic"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧谷歌广告 </span> <span> <input type="checkbox" id="feature-side-google-ad" aria-nock="side_google_ad" /> <label for="feature-side-google-ad"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧推荐评分 </span> <span> <input type="checkbox" id="feature-recommend-vote" aria-nock="recommend_vote" /> <label for="feature-recommend-vote"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧最新评论 </span> <span> <input type="checkbox" id="feature-latest-comment" aria-nock="latest_comment" /> <label for="feature-latest-comment"></label> </span> </div> </div> </div> </div>`;
+	const setStyle = `@keyframes fall { 0% { transform: translate(0%, -100%); opacity: 0; } 100% { transform: translate(0%, 0%); opacity: 1; } } .setting-item input[type=checkbox] { height: 0; width: 0; display: none; } .setting-item label { cursor: pointer; text-indent: -9999px; width: 40px; height: 20px; background: pink; display: block; border-radius: 100px; position: relative; } .setting-item label:after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; background: #fff; border-radius: 90px; transition: 0.2s; } .setting-item input:checked+label { background: #57a; } .setting-item input:checked+label:after { left: calc(100% - 2px); transform: translateX(-100%); } .setting-item label:active:after { width: 28px; } .modal-dialog { display:none; border: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; min-width: 100vw; min-height: 100vh; height: 100%; background-color: rgba(0, 0, 0, 0.4); } .modal-setting { width: 450px; height: 90%; overflow: scroll; margin: auto; background-color: #ffffff; border-radius: 5px; padding: 20px; margin-top: 40px; position: relative; box-sizing: border-box; animation: fall 0.5s ease-in-out; } .modal-header { border-bottom: 1px solid #000000; } .modal-header h3 { padding: 10px 0; margin: 0; } .modal-header span { font-size: 24px; color: #ccc; position: absolute; right: 5px; top: 0; cursor: pointer; } .setting-item { margin: 10px 0; display: flex; justify-content: space-between; }`;
 
 	const dStyle = document.createElement("style");
 	dStyle.innerHTML = setStyle;
 	document.head.appendChild(dStyle);
-	document.body.innerHTML += setModal;
+	const modal = document.createElement("div");
+	modal.innerHTML = setModal;
+	document.body.appendChild(modal);
 
 	const checkboxList = document.querySelectorAll(".setting-item input");
 	Array.from(checkboxList).forEach((checkbox) => {
@@ -132,7 +158,7 @@
 
 	if (features.mark.datetime.enabled) {
 		const postTime = document.querySelector(features.mark.datetime.selector[0]);
-		const updateTime = document.querySelector(features.mark.datetime.selector[1]);
+		const updateTime = document.querySelector(features.mark.datetime.selector[1]) ?? postTime;
 
 		const regex = /\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}/g;
 		let rawPostTime = postTime.innerText.match(regex)[0];
@@ -198,12 +224,16 @@
 	}
 
 	if (features.source_redirct.enabled) {
-		const copyright = document.querySelector(features.source_redirct.selector[0]);
-		const sourceUrl = document.querySelector(features.source_redirct.selector[1]);
-		const iconUrl = copyright.getAttribute("src");
-		const type = iconUrl.substring(iconUrl.lastIndexOf("/") + 1, iconUrl.lastIndexOf("."));
-		if (type === "reprint") {
-			window.location.href = sourceUrl;
+		const editStatus = document.querySelector(features.source_redirct.selector[0]);
+		const flag = editStatus.className !== features.source_redirct.selector[0].slice(1);
+		if (flag) {
+			const copyright = document.querySelector(features.source_redirct.selector[1]);
+			const sourceUrl = document.querySelector(features.source_redirct.selector[2]);
+			const iconUrl = copyright.getAttribute("src");
+			const type = iconUrl.substring(iconUrl.lastIndexOf("/") + 1, iconUrl.lastIndexOf("."));
+			if (type === "reprint") {
+				window.location.href = sourceUrl;
+			}
 		}
 	}
 
@@ -212,6 +242,49 @@
 		style.textContent = `${features.unfixed_comment.selector[0]}
 								{ position: unset !important; }`;
 		document.head.appendChild(style);
+	}
+
+	if (features.hidden_login.enabled && !document.querySelector(features.hidden_login.selector[0])) {
+		const observer = new MutationObserver(() => {
+			const loginModal = document.querySelector(features.hidden_login.selector[1]);
+
+			if (!loginModal) {
+				return;
+			}
+
+			loginModal.querySelector(features.hidden_login.selector[2]).click();
+			observer.disconnect();
+		});
+		observer.observe(document.body, { childList: true, subtree: true });
+	}
+
+	if (features.allow_copy.enabled) {
+		const contentView = document.querySelector(features.allow_copy.selector[0]);
+		contentView.querySelectorAll("*").forEach((content) => {
+			content.oncopy = (e) => e.stopPropagation();
+		});
+
+		const preTags = document.querySelectorAll(features.allow_copy.selector[1]);
+		preTags.forEach((pre) => (pre.style.userSelect = "auto"));
+
+		const codeTags = document.querySelectorAll(features.allow_copy.selector[2]);
+		codeTags.forEach((code) => (code.style.userSelect = "auto"));
+	}
+
+	if (features.unfold_code.enabled) {
+		const unfoldCodeBtns = document.querySelectorAll(features.unfold_code.selector[0]);
+		unfoldCodeBtns.forEach((btn) => btn.click());
+	}
+
+	if (features.allow_copy_with_btn.enabled) {
+		const codeCopyBtns = document.querySelectorAll(features.allow_copy_with_btn.selector[0]);
+		codeCopyBtns.forEach((btn) => {
+			btn.setAttribute("data-title", "复制");
+			btn.onclick = () => {
+				const codeBox = btn.previousSibling;
+				navigator.clipboard.writeText(codeBox.innerText);
+			};
+		});
 	}
 
 	const hiddenStyle = document.createElement("style");
