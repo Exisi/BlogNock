@@ -9,16 +9,21 @@
 - [x] CSDN
 - [x] 知乎
 - [x] 简书
-- [ ] 思否（Segmentfault）
+- [x] 思否（Segmentfault）
 - [ ] 博客园
+- [ ] 系统之家
 
 ### 安装
 
 本脚本发布于 Greasy Fork，您可以通过以下链接安装相关脚本
 
-- [CSDNock](https://greasyfork.org/zh-CN/scripts/493011-csdnock)
-- [ZhihuNock](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)
-- [JianShuNock](https://greasyfork.org/zh-CN/scripts/494159-jianshunock)
+| 名称             | 站点     |                             Greasy Fork                              |
+| :--------------- | :------- | :------------------------------------------------------------------: |
+| CSDNock          | CSDN     |     [安装](https://greasyfork.org/zh-CN/scripts/493011-csdnock)      |
+| ZhihuNock        | 知乎专栏 |    [安装](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)     |
+| ZhihuNock-Q      | 知乎问答 |   [安装](https://greasyfork.org/zh-CN/scripts/494300-zhihunock-q)    |
+| JianShuNock      | 简书     |   [安装](https://greasyfork.org/zh-CN/scripts/494159-jianshunock)    |
+| SegmentFaultNock | 思否     | [安装](https://greasyfork.org/zh-CN/scripts/494376-segmentfaultnock) |
 
 ### 功能相关
 
