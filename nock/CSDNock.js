@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CSDNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.7
+// @version      0.0.8
 // @description  BlogNock系列，CSDN文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -38,7 +38,7 @@
 			readtime: {
 				enabled: GM_getValue("readtime", true),
 				selector: ["#content_views", ".bar-content", ".blog-content-box"],
-				icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAFCUlEQVRoge1YWU8bVxQ+nrFnxuMVs5iyLy4GK0AILQ1QaCqBVBLx0ERtUiEUIar2F+UxQjwgdVFQk1ZVFaFEbSpKaEExiwsB0pYQGiiLsT1je2bsqc4E0pJAwdcW6cN8yEKyfO79vrPdcy/o0KFDhw4dOgAMJD5QVRXGf54uowyGpIGikhnxo6qCrCSYfHf207KyQtFgSI2akWTPL7787lzg10c+jmOuGch8cSBkRQELb+65crnrMwBIyUFEQoLbIWduTtY1k4nI/FBgpCMRcWhzKzgCAOup2FIkG9pslpAgRPsoKnPRwFSSZQX/92ZlObZStifZFD13Y/j220+e/HWP4xiSJV4CppWZY7tbWhpGq73lW6nWCFFEEL4aTyAWi2uiMgEpLkNujmsdRZAsRyyEogxJk4nOiAjYjbKJMSrEfEgNHQ5biGWZDxKJzHRfRUmA3W4NkdoTC8nPz0larZZIIpEgXeI5kskkGI3GXnde9lPSNYiFIAoL81awTlItzBeB3crptAUrK4sjpGukJaTaWz5H03SvohCntuYEUYz1VVQUPUqHS5oRcSuve0oehsNiH0lU0AYjarGYxXPvvBlIh0taQhDd3e+O8zwrRqOxlFMMG0UkEu1vbj49mi6PtIUgOjqaRyRJvhqXpGOLwXa7sxPqq6urmmo841tJl0NGhFR7K7Y6O1puy5LcIwjR/xSjjSKKAsFguK+mpnLuwvn2XzLBgXhEOQhLS8vWH+5NtAeDYSfPc0MvCtqticu465kG32RrS8PiocRSTNOMCtnDT2P+iomJ2SWjkQaK+ifoWNhFRe62i+93/ngksZOatQ7Dysoas70dctE0/ZKf8Lt4XGJmZhbyMr1vRiNy5+79U37/fB2AOmSx8FpX2jv50cMMY4R4XNbOjeJi9/JHVy7cOZTYq0qtb779vml2ZtFnt1sHMJ0EQQSWZfCM0EhJcQnCEQFYlgWGMcHOTuSqzcaHPv3kw6/+N0IwEuPj000ul+M6RiEWjYG3uhxqT1WB252t/UYUojD/8HeYmAwATgI8b4adnXAvDp8f91+69cqFLC4t24eHRy7abJYBvDFGIiK0tjbA2bfqD7RdXV2HW1/fBUmSgec52NgM9tfVeqfOd7Xta8MnXuyjow9aTCbjAHaoUEiA+jrvoSIQBQV50PVem1Y/OCw67LbrgcCS7/HjP9O6aqYlZG7+N9fa2kYeehZbq8vlgPb2N460Ky0tgNraKhxP4NnlTB30++dPp8MlLSELC394KIoexOJGIfX1VVohHweNjT7gLZyWYmYzByur60WvTMja+mY+y5q0FLHZLFBZWXJs2yynHUqKXtPaMaZlJCxYZ2YXic8XYiHLy6tcVIxxeMihV7OznRq5VID1AuqzwlZVdXBzI+g6cSGCEOMlSf4cOxVeVVMVgcjOcTzvmxgVQRStpHyInwrjksShANhtlXuvjnvfHQWsK+1DU1o7NxiwziSOlA/ROTI9vZA3NvbgrKQoN400rZE3m1nAsURNqoB/RwHtYnjahwXNEbiGqsIlj6dksbOjeepEHrHvj081BUORm067FZKqqg2DghCD7e2w5prjUEA7FMNxrBaR3Vq7MTkZ6KsoL8T7e0oPEURCEomE0UhTIMn7Hx2O23r/DXnfGqr28BeXZO5EhHg8pYt+/3wPRRlihNl5AFSQJJXJz8/d8tVUbmRoUR06dOjQoeNoAMDfddMStWBVXeEAAAAASUVORK5CYII=",
+				icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="currentcolor" d="M360 0H24C10.7 0 0 10.7 0 24v16c0 13.3 10.7 24 24 24 0 91 51 167.7 120.8 192C75 280.3 24 357 24 448c-13.3 0-24 10.7-24 24v16c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24v-16c0-13.3-10.7-24-24-24 0-91-51-167.7-120.8-192C309 231.7 360 155 360 64c13.3 0 24-10.7 24-24V24c0-13.3-10.7-24-24-24zm-64 448H88c0-77.5 46.2-144 104-144 57.8 0 104 66.5 104 144z"/></svg>`,
 			},
 		},
 		source_redirct: {
@@ -102,7 +102,7 @@
 	};
 
 	const setModal = `<div class="modal-dialog"> <div class="modal-setting" onClick="event.cancelBubble = true"> <div class="modal-header"> <h3>功能设置</h3> <span class="btn-dialog-close">×</span> </div> <div class="modal-body"> <div class="setting-item"> <span>替换文章标识图片（原创/转载/翻译）</span> <span> <input type="checkbox" id="feature-mark-copyright" aria-nock="copyright" /> <label for="feature-mark-copyright"></label> </span> </div> <div class="setting-item"> <span> 文章显示时间优化 </span> <span> <input type="checkbox" id="feature-mark-datetime" aria-nock="datetime" /> <label for="feature-mark-datetime"></label> </span> </div> <div class="setting-item"> <span> 文章阅读时长 </span> <span> <input type="checkbox" id="feature-mark-readtime" aria-nock="readtime" /> <label for="feature-mark-readtime"></label> </span> </div> <div class="setting-item"> <span> 移除底部推荐的 CSDN 下载 </span> <span> <input type="checkbox" id="feature-recommend-type-download" aria-nock="recommend_type_download" /> <label for="feature-recommend-type-download"></label> </span> </div> <div class="setting-item"> <span> 自动转载原链重定向 </span> <span> <input type="checkbox" id="feature-source-redirct" aria-nock="source_redirct" /> <label for="feature-source-redirct"></label> </span> </div> <div class="setting-item"> <span> 取消固定文章工具栏 </span> <span> <input type="checkbox" id="feature-unfixed-comment" aria-nock="unfixed_comment" /> <label for="feature-unfixed-comment"></label> </span> </div> <div class="setting-item"> <span> 关闭界面加载后的登录模态框 </span> <span> <input type="checkbox" id="feature-hidden-login" aria-nock="hidden_login" /> <label for="feature-hidden-login"></label> </span> </div> <hr /> <div class="setting-item"> <span> 文章自由复制 </span> <span> <input type="checkbox" id="feature-allow-copy" aria-nock="allow_copy" /> <label for="feature-allow-copy"></label> </span> </div> <div class="setting-item"> <span> 代码自动展开 </span> <span> <input type="checkbox" id="feature-unfold-code" aria-nock="unfold_code" /> <label for="feature-unfold-code"></label> </span> </div> <div class="setting-item"> <span> 允许一键复制代码 </span> <span> <input type="checkbox" id="feature-allow-copy-with-btn" aria-nock="allow_copy_with_btn" /> <label for="feature-allow-copy-with-btn"></label> </span> </div> <hr /> <div class="setting-item"> <span> 隐藏文本复制的工具栏 </span> <span> <input type="checkbox" id="feature-article-search-tip" aria-nock="article_search_tip" /> <label for="feature-article-search-tip"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧工具栏 </span> <span> <input type="checkbox" id="feature-side-toolbar" aria-nock="side_toolbar" /> <label for="feature-side-toolbar"></label> </span> </div> <div class="setting-item"> <span> 隐藏登录提示 </span> <span> <input type="checkbox" id="feature-login-tips" aria-nock="login_tips" /> <label for="feature-login-tips"></label> </span> </div> <div class="setting-item"> <span> 隐藏收藏提示 </span> <span> <input type="checkbox" id="feature-collection-tips" aria-nock="collection_tips" /> <label for="feature-collection-tips"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧活动图片 </span> <span> <input type="checkbox" id="feature-write-guide-pic" aria-nock="write_guide_pic" /> <label for="feature-write-guide-pic"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧谷歌广告 </span> <span> <input type="checkbox" id="feature-side-google-ad" aria-nock="side_google_ad" /> <label for="feature-side-google-ad"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧推荐评分 </span> <span> <input type="checkbox" id="feature-recommend-vote" aria-nock="recommend_vote" /> <label for="feature-recommend-vote"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧最新评论 </span> <span> <input type="checkbox" id="feature-latest-comment" aria-nock="latest_comment" /> <label for="feature-latest-comment"></label> </span> </div> </div> </div> </div>`;
-	const setStyle = `@keyframes fall { 0% { transform: translate(0%, -100%); opacity: 0; } 100% { transform: translate(0%, 0%); opacity: 1; } } .setting-item input[type=checkbox] { height: 0; width: 0; display: none; } .setting-item label { cursor: pointer; text-indent: -9999px; width: 40px; height: 20px; background: pink; display: block; border-radius: 100px; position: relative; } .setting-item label:after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; background: #fff; border-radius: 90px; transition: 0.2s; } .setting-item input:checked+label { background: #57a; } .setting-item input:checked+label:after { left: calc(100% - 2px); transform: translateX(-100%); } .setting-item label:active:after { width: 28px; } .modal-dialog { display:none; border: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; min-width: 100vw; min-height: 100vh; height: 100%; background-color: rgba(0, 0, 0, 0.4); } .modal-setting { width: 450px; height: 90%; overflow: scroll; margin: auto; background-color: #ffffff; border-radius: 5px; padding: 20px; margin-top: 40px; position: relative; box-sizing: border-box; animation: fall 0.5s ease-in-out; } .modal-header { border-bottom: 1px solid #000000; } .modal-header h3 { padding: 10px 0; margin: 0; } .modal-header span { font-size: 24px; color: #ccc; position: absolute; right: 5px; top: 0; cursor: pointer; } .setting-item { margin: 10px 0; display: flex; justify-content: space-between; }`;
+	const setStyle = `@keyframes fall { 0% { transform: translate(0%, -100%); opacity: 0; } 100% { transform: translate(0%, 0%); opacity: 1; } } .setting-item input[type=checkbox] { height: 0; width: 0; display: none; } .setting-item label { cursor: pointer; text-indent: -9999px; width: 40px; height: 20px; background: pink; display: block; border-radius: 100px; position: relative; } .setting-item label:after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; background: #fff; border-radius: 90px; transition: 0.2s; } .setting-item input:checked+label { background: #57a; } .setting-item input:checked+label:after { left: calc(100% - 2px); transform: translateX(-100%); } .setting-item label:active:after { width: 28px; } .modal-dialog { pointer-events: auto !important; display:none; border: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; min-width: 100vw; min-height: 100vh; height: 100%; background-color: rgba(0, 0, 0, 0.4); } .modal-setting { width: 450px; height: 90%; overflow: scroll; margin: auto; background-color: #ffffff; border-radius: 5px; padding: 20px; margin-top: 40px; position: relative; box-sizing: border-box; animation: fall 0.5s ease-in-out; } .modal-header { border-bottom: 1px solid #000000; } .modal-header h3 { padding: 10px 0; margin: 0; } .modal-header span { font-size: 24px; color: #ccc; position: absolute; right: 5px; top: 0; cursor: pointer; } .setting-item { margin: 10px 0; display: flex; justify-content: space-between; }`;
 
 	const dStyle = document.createElement("style");
 	dStyle.innerHTML = setStyle;
@@ -198,24 +198,30 @@
 		const readtime = textCount / 400;
 		if (readtime >= 1440) {
 			const days = Math.floor(readtime / 1440);
-			readbox.innerHTML = `<img src=${features.mark.readtime.icon} width='22'><span style='cursor:pointer;'> 预计阅读时长 ${days} 天</span>`;
+			readbox.innerHTML = `${features.mark.readtime.icon}<span> 预计阅读时长 ${days} 天</span>`;
 		}
 
 		if (readtime >= 60) {
 			const hours = Math.floor(readtime / 60);
 			const minutes = Math.floor(readtime % 60);
-			readbox.innerHTML = `<img src=${features.mark.readtime.icon} width='22'><span style='cursor:pointer;'> 预计阅读时长 ${hours} 小时 ${minutes} 分钟</span>`;
+			readbox.innerHTML = `${features.mark.readtime.icon}<span> 预计阅读时长 ${hours} 小时 ${minutes} 分钟</span>`;
 		}
 
 		if (readtime >= 1) {
 			const minutes = Math.round(readtime);
-			readbox.innerHTML = `<img src=${features.mark.readtime.icon} width='22'><span style='cursor:pointer;'> 预计阅读时长 ${minutes} 分钟</span>`;
+			readbox.innerHTML = `${features.mark.readtime.icon}<span> 预计阅读时长 ${minutes} 分钟</span>`;
 		}
 
 		if (readtime < 1) {
 			const seconds = Math.round(readtime * 60);
-			readbox.innerHTML = `<img src=${features.mark.readtime.icon} width='22'><span style='cursor:pointer;'> 预计阅读时长 ${seconds} 秒</span>`;
+			readbox.innerHTML = `${features.mark.readtime.icon}<span> 预计阅读时长 ${seconds} 秒</span>`;
 		}
+		const icon = readbox.querySelector("svg");
+		icon.style.width = "14px";
+		icon.style.height = "14px";
+		icon.style.marginRight = "3px";
+		readbox.style.fontSize = "14px";
+		readbox.style.cursor = "pointer";
 		readbox.style.textDecoration = "underline";
 		readbox.addEventListener("click", () =>
 			document.querySelector(features.mark.readtime.selector[2]).scrollIntoView(false)
