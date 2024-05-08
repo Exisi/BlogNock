@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JianShuNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.3
+// @version      0.0.4
 // @description  BlogNock系列，简书文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -19,12 +19,10 @@
 			datetime: {
 				enabled: GM_getValue("datetime", true),
 				selector: ["section button", "time", "section time"],
-				icon: "data:image/png;base64,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",
 			},
 			readtime: {
 				enabled: GM_getValue("readtime", true),
 				selector: ["section button", "time", "article"],
-				icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAFCUlEQVRoge1YWU8bVxQ+nrFnxuMVs5iyLy4GK0AILQ1QaCqBVBLx0ERtUiEUIar2F+UxQjwgdVFQk1ZVFaFEbSpKaEExiwsB0pYQGiiLsT1je2bsqc4E0pJAwdcW6cN8yEKyfO79vrPdcy/o0KFDhw4dOgAMJD5QVRXGf54uowyGpIGikhnxo6qCrCSYfHf207KyQtFgSI2akWTPL7787lzg10c+jmOuGch8cSBkRQELb+65crnrMwBIyUFEQoLbIWduTtY1k4nI/FBgpCMRcWhzKzgCAOup2FIkG9pslpAgRPsoKnPRwFSSZQX/92ZlObZStifZFD13Y/j220+e/HWP4xiSJV4CppWZY7tbWhpGq73lW6nWCFFEEL4aTyAWi2uiMgEpLkNujmsdRZAsRyyEogxJk4nOiAjYjbKJMSrEfEgNHQ5biGWZDxKJzHRfRUmA3W4NkdoTC8nPz0larZZIIpEgXeI5kskkGI3GXnde9lPSNYiFIAoL81awTlItzBeB3crptAUrK4sjpGukJaTaWz5H03SvohCntuYEUYz1VVQUPUqHS5oRcSuve0oehsNiH0lU0AYjarGYxXPvvBlIh0taQhDd3e+O8zwrRqOxlFMMG0UkEu1vbj49mi6PtIUgOjqaRyRJvhqXpGOLwXa7sxPqq6urmmo841tJl0NGhFR7K7Y6O1puy5LcIwjR/xSjjSKKAsFguK+mpnLuwvn2XzLBgXhEOQhLS8vWH+5NtAeDYSfPc0MvCtqticu465kG32RrS8PiocRSTNOMCtnDT2P+iomJ2SWjkQaK+ifoWNhFRe62i+93/ngksZOatQ7Dysoas70dctE0/ZKf8Lt4XGJmZhbyMr1vRiNy5+79U37/fB2AOmSx8FpX2jv50cMMY4R4XNbOjeJi9/JHVy7cOZTYq0qtb779vml2ZtFnt1sHMJ0EQQSWZfCM0EhJcQnCEQFYlgWGMcHOTuSqzcaHPv3kw6/+N0IwEuPj000ul+M6RiEWjYG3uhxqT1WB252t/UYUojD/8HeYmAwATgI8b4adnXAvDp8f91+69cqFLC4t24eHRy7abJYBvDFGIiK0tjbA2bfqD7RdXV2HW1/fBUmSgec52NgM9tfVeqfOd7Xta8MnXuyjow9aTCbjAHaoUEiA+jrvoSIQBQV50PVem1Y/OCw67LbrgcCS7/HjP9O6aqYlZG7+N9fa2kYeehZbq8vlgPb2N460Ky0tgNraKhxP4NnlTB30++dPp8MlLSELC394KIoexOJGIfX1VVohHweNjT7gLZyWYmYzByur60WvTMja+mY+y5q0FLHZLFBZWXJs2yynHUqKXtPaMaZlJCxYZ2YXic8XYiHLy6tcVIxxeMihV7OznRq5VID1AuqzwlZVdXBzI+g6cSGCEOMlSf4cOxVeVVMVgcjOcTzvmxgVQRStpHyInwrjksShANhtlXuvjnvfHQWsK+1DU1o7NxiwziSOlA/ROTI9vZA3NvbgrKQoN400rZE3m1nAsURNqoB/RwHtYnjahwXNEbiGqsIlj6dksbOjeepEHrHvj081BUORm067FZKqqg2DghCD7e2w5prjUEA7FMNxrBaR3Vq7MTkZ6KsoL8T7e0oPEURCEomE0UhTIMn7Hx2O23r/DXnfGqr28BeXZO5EhHg8pYt+/3wPRRlihNl5AFSQJJXJz8/d8tVUbmRoUR06dOjQoeNoAMDfddMStWBVXeEAAAAASUVORK5CYII=",
 			},
 		},
 		hidden: {
@@ -95,11 +93,6 @@
 	if (features.mark.datetime.enabled) {
 		const getRawTimeAgo = (element) => calculateTimeAgo(element.innerText.match(regex)[0]);
 		const regex = /\d{4}.\d{1,2}.\d{1,2} \d{1,2}:\d{1,2}/g;
-
-		const icon = document.createElement("img");
-		icon.src = features.mark.datetime.icon;
-		icon.width = 15;
-		icon.style.marginRight = "5px";
 
 		createObserver((observer) => {
 			const folllowBtn = document.querySelector(features.mark.datetime.selector[0]);
