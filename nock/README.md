@@ -62,3 +62,13 @@
 ### 安装
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494159-jianshunock)
+
+## SegmentFaultNock（思否）
+
+### 功能
+
+- 文章显示时间优化
+- 定位文字调整
+- 点击文章阅读时长跳转文章底部
+
+[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494376-segmentfaultnock)
