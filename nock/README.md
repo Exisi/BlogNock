@@ -45,7 +45,7 @@
 
 ### 安装
 
-[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)
+[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494300-zhihunock-q)
 
 ## JianShuNock（简书）
 
