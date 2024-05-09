@@ -34,6 +34,8 @@
 - 知乎文章按钮位置调整
 - 登录提示自动隐藏
 
+[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)
+
 ## ZhiHuNock-Q（知乎-问答)
 
 ### 功能
@@ -73,3 +75,16 @@
 - 点击文章阅读时长跳转文章底部
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494376-segmentfaultnock)
+
+## 博客园
+
+### 功能
+
+- 文章显示时间提升
+- 文章阅读时长
+- 右侧推荐按钮
+- 右侧收藏按钮
+- 右侧评论跳转按钮
+- 右侧回到顶部按钮
+
+[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494487-cnblogsnock)
