@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CSDNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.8
+// @version      0.0.9
 // @description  BlogNock系列，CSDN文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -171,22 +171,18 @@
 		const postTimeAgo = calculateTimeAgo(rawPostTime);
 		const updateTimeAgo = calculateTimeAgo(rawUpdateTime);
 
+		const formattedPostTime = `发布于 ${rawPostTime}（${postTimeAgo}）`;
+		const formattedUpdateTime = `编辑于 ${rawUpdateTime}（${updateTimeAgo}）`;
+
 		postTime.style.cursor = "pointer";
 		postTime.style.fontSize = "14px";
 		postTime.style.textDecoration = "underline";
-		postTime.innerText = `${rawPostTime}（${postTimeAgo}发布）`;
+		postTime.innerText = formattedPostTime;
 		postTime.setAttribute("data-time", rawPostTime);
-		postTime.addEventListener("click", (e) => {
-			const rawTime = e.target.getAttribute("data-time");
-
-			if (rawTime == rawPostTime) {
-				e.target.setAttribute("data-time", rawUpdateTime);
-				e.target.innerText = `${rawUpdateTime}（${updateTimeAgo}更新）`;
-				return;
-			}
-
-			e.target.setAttribute("data-time", rawPostTime);
-			e.target.innerText = `${rawPostTime}（${postTimeAgo}发布）`;
+		postTime.addEventListener("click", () => {
+			const text =
+				postTime.innerText == formattedPostTime ? formattedUpdateTime : formattedPostTime;
+			postTime.innerHTML = text;
 		});
 	}
 
