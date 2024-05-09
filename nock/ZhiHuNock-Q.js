@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ZhiHuNock-Q
 // @namespace    http://tampermonkey.net/
-// @version      0.0.2
+// @version      0.0.3
 // @description  BlogNock系列，知乎问答的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -24,7 +24,7 @@
 					".QuestionHeaderActions>.ShareMenu",
 					".QuestionHeader",
 				],
-				icon: "data:image/png;base64,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",
+				icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="currentcolor" d="M256 8C119 8 8 119 8 256S119 504 256 504 504 393 504 256 393 8 256 8zm92.5 313h0l-20 25a16 16 0 0 1 -22.5 2.5h0l-67-49.7a40 40 0 0 1 -15-31.2V112a16 16 0 0 1 16-16h32a16 16 0 0 1 16 16V256l58 42.5A16 16 0 0 1 348.5 321z"/></svg>`,
 			},
 		},
 		hidden_login: {
@@ -81,7 +81,7 @@
 	if (features.mark.question_datetime.enabled) {
 		const questionCreatedTime = document.querySelector(features.mark.question_datetime.selector[0]);
 		const questionModifiedTime = document.querySelector(
-			features.mark.question_datetime.selector[0]
+			features.mark.question_datetime.selector[1]
 		);
 		const rawQuestionPostTime = questionCreatedTime.getAttribute("content");
 		const rawQuestionUpdateTime = questionModifiedTime.getAttribute("content");
@@ -97,13 +97,8 @@
 		const questionPostFormattedText = `发布时间 ${questionPostTime}（${questionPostTimeAgo}）`;
 		const questionUpdateFormattedText = `更新时间 ${questionUpdateTime}（${questionUpdateTimeAgo}）`;
 
-		const icon = document.createElement("img");
-		icon.src = features.mark.question_datetime.icon;
-		icon.style.marginRight = "5px";
-		icon.width = 15;
-
 		const formattedTimeBox = document.createElement("div");
-		formattedTimeBox.textContent = questionPostFormattedText;
+		formattedTimeBox.innerHTML = features.mark.question_datetime.icon;
 		formattedTimeBox.style.color = "#8491a5";
 		formattedTimeBox.style.marginLeft = "20px";
 		formattedTimeBox.style.display = "flex";
@@ -111,16 +106,24 @@
 		formattedTimeBox.style.fontSize = "14px";
 		formattedTimeBox.style.cursor = "pointer";
 		formattedTimeBox.style.textDecoration = "underline";
+
+		const datetime = document.createElement("span");
+		datetime.innerText = questionPostFormattedText;
+		formattedTimeBox.appendChild(datetime);
+
 		formattedTimeBox.addEventListener("click", () => {
 			const formattedText =
-				formattedTimeBox.textContent == questionPostFormattedText
+				datetime.innerText == questionPostFormattedText
 					? questionUpdateFormattedText
 					: questionPostFormattedText;
 
-			formattedTimeBox.textContent = formattedText;
-			formattedTimeBox.prepend(icon);
+			datetime.innerText = formattedText;
 		});
-		formattedTimeBox.prepend(icon);
+
+		const icon = formattedTimeBox.querySelector("svg");
+		icon.style.width = "15px";
+		icon.style.height = "15px";
+		icon.style.marginRight = "5px";
 
 		const questionHeaderShareAction = document.querySelector(
 			features.mark.question_datetime.selector[2]
