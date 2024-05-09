@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SegmentFaultNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.4
+// @version      0.0.5
 // @description  BlogNock系列，思否文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -76,8 +76,7 @@
 		const history = document.createElement("a");
 		history.innerHTML = `${features.mark.modified_history.icon}<span>历史修改</span>`;
 		history.style.cursor = "pointer";
-		history.style.marginLeft = "15px";
-		history.style.marginRight = "5px";
+		history.style.marginLeft = "10px";
 		history.style.color = "rgba(108, 117, 125)";
 		history.style.display = "flex";
 		history.style.alignItems = "center";
