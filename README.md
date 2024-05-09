@@ -10,7 +10,7 @@
 - [x] 知乎
 - [x] 简书
 - [x] 思否（Segmentfault）
-- [ ] 博客园
+- [x] 博客园
 - [ ] 系统之家
 
 ### 安装
@@ -24,6 +24,7 @@
 | ZhihuNock-Q      | 知乎问答 |   [安装](https://greasyfork.org/zh-CN/scripts/494300-zhihunock-q)    |
 | JianShuNock      | 简书     |   [安装](https://greasyfork.org/zh-CN/scripts/494159-jianshunock)    |
 | SegmentFaultNock | 思否     | [安装](https://greasyfork.org/zh-CN/scripts/494376-segmentfaultnock) |
+| CnBlogsNock      | 博客园   |   [安装](https://greasyfork.org/zh-CN/scripts/494487-cnblogsnock)    |
 
 ### 功能相关
 
