@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ZhiHuNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.6
+// @version      0.0.7
 // @description  BlogNock系列，知乎文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -251,6 +251,7 @@
 				clonedContentItemActions.style.opacity = 0;
 				clonedContentItemActions.style.display = "none";
 			} else {
+				clonedContentItemActions.style.opacity = 1;
 				clonedContentItemActions.style.display = "flex";
 			}
 		});
