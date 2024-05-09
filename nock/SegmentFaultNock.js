@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SegmentFaultNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.5
+// @version      0.0.6
 // @description  BlogNock系列，思否文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -127,8 +127,8 @@
 		const postTime = new Date(rawPublishedTime).toLocaleString().replaceAll("/", "-");
 		const updateTime = new Date(rawUpdatedTime).toLocaleString().replaceAll("/", "-");
 
-		const formattedPostTime = `发布时间 ${postTime}（${postTimeAgo}）`;
-		const formattedUpdateTime = `更新时间 ${updateTime}（${updateTimeAgo}）`;
+		const formattedPostTime = `发布于 ${postTime}（${postTimeAgo}）`;
+		const formattedUpdateTime = `编辑于 ${updateTime}（${updateTimeAgo}）`;
 
 		const datetimeItem = datePublished.parentNode;
 		datetimeItem.innerHTML = features.mark.datetime.icon;
@@ -150,6 +150,8 @@
 		icon.style.width = "16px";
 		icon.style.height = "15px";
 		icon.style.marginRight = "3px";
+
+		datePublished.closest("div").style.flexWrap = "wrap";
 	}
 
 	if (features.mark.readtime.enabled) {
