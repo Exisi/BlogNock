@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ZhiHuNock-Q
 // @namespace    http://tampermonkey.net/
-// @version      0.0.4
+// @version      0.0.5
 // @description  BlogNock系列，知乎问答的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -95,7 +95,7 @@
 			.replaceAll("/", "-");
 
 		const questionPostFormattedText = `发布于 ${questionPostTime}（${questionPostTimeAgo}）`;
-		const questionUpdateFormattedText = `更新于 ${questionUpdateTime}（${questionUpdateTimeAgo}）`;
+		const questionUpdateFormattedText = `编辑于 ${questionUpdateTime}（${questionUpdateTimeAgo}）`;
 
 		const formattedTimeBox = document.createElement("div");
 		formattedTimeBox.innerHTML = features.mark.question_datetime.icon;
