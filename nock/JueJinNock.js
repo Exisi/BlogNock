@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JueJinNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.2
+// @version      0.0.3
 // @description  BlogNock系列，掘金文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -31,6 +31,14 @@
 				selector: [".meta-box .read-time", "#article-root"],
 			},
 		},
+		allow_copy_with_btn: {
+			enabled: GM_getValue("allow_copy_with_btn", true),
+			selector: [".code-block-extension-copyCodeBtn"],
+		},
+		copyright_text: {
+			enabled: GM_getValue("copyright_text", true),
+			selector: ["#article-root"],
+		},
 		hidden_login_tips: {
 			enabled: GM_getValue("hidden_login_tips", true),
 			selector: [".avatar-wrapper", ".bottom-login-guide"],
@@ -51,7 +59,7 @@
 		},
 	};
 
-	const setModal = `<div class="modal-dialog"> <div class="modal-setting" onClick="event.cancelBubble = true"> <div class="modal-header"> <h3>功能设置</h3> <span class="btn-dialog-close">×</span> </div> <div class="modal-body"> <div class="setting-item"> <span> 文章显示时间优化 </span> <span> <input type="checkbox" id="feature-mark-datetime" aria-nock="datetime" /> <label for="feature-mark-datetime"></label> </span> </div> <div class="setting-item"> <span> 阅读时长点击跳转到文章底部 </span> <span> <input type="checkbox" id="feature-mark-readtime" aria-nock="readtime" /> <label for="feature-mark-readtime"></label> </span> </div> <hr/> <div class="setting-item"> <span> 隐藏登录提示 </span> <span> <input type="checkbox" id="feature-hidden-login-tips" aria-nock="hidden_login_tips" /> <label for="feature-hidden-login-tips"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧反馈按钮 </span> <span> <input type="checkbox" id="feature-hidden-feedback-btn" aria-nock="feedback_btn" /> <label for="feature-hidden-feedback-btn"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧更多按钮 </span> <span> <input type="checkbox" id="feature-hidden-more-btn" aria-nock="more_btn" /> <label for="feature-hidden-more-btn"></label> </span> </div> <div class="setting-item"> <span> 隐藏右栏底部群广告 </span> <span> <input type="checkbox" id="feature-hidden-ad-container" aria-nock="ad_container" /> <label for="feature-hidden-ad-container"></label> </span> </div> </div> </div> </div>`;
+	const setModal = `<div class="modal-dialog"> <div class="modal-setting" onClick="event.cancelBubble = true"> <div class="modal-header"> <h3>功能设置</h3> <span class="btn-dialog-close">×</span> </div> <div class="modal-body"> <div class="setting-item"> <span> 文章显示时间优化 </span> <span> <input type="checkbox" id="feature-mark-datetime" aria-nock="datetime" /> <label for="feature-mark-datetime"></label> </span> </div> <div class="setting-item"> <span> 阅读时长点击跳转到文章底部 </span> <span> <input type="checkbox" id="feature-mark-readtime" aria-nock="readtime" /> <label for="feature-mark-readtime"></label> </span> </div> <div class="setting-item"> <span> 允许一键复制代码 </span> <span> <input type="checkbox" id="feature-allow-copy-with-btn" aria-nock="allow_copy_with_btn" /> <label for="feature-allow-copy-with-btn"></label> </span> </div> <div class="setting-item"> <span> 移除复制附加的版权声明 </span> <span> <input type="checkbox" id="feature-copyright-text" aria-nock="copyright_text" /> <label for="feature-copyright-text"></label> </span> </div> <hr /> <div class="setting-item"> <span> 隐藏登录提示 </span> <span> <input type="checkbox" id="feature-hidden-login-tips" aria-nock="hidden_login_tips" /> <label for="feature-hidden-login-tips"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧反馈按钮 </span> <span> <input type="checkbox" id="feature-hidden-feedback-btn" aria-nock="feedback_btn" /> <label for="feature-hidden-feedback-btn"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧更多按钮 </span> <span> <input type="checkbox" id="feature-hidden-more-btn" aria-nock="more_btn" /> <label for="feature-hidden-more-btn"></label> </span> </div> <div class="setting-item"> <span> 隐藏右栏底部群广告 </span> <span> <input type="checkbox" id="feature-hidden-ad-container" aria-nock="ad_container" /> <label for="feature-hidden-ad-container"></label> </span> </div> </div> </div> </div>`;
 	const setStyle = `@keyframes fall { 0% { transform: translate(0%, -100%); opacity: 0; } 100% { transform: translate(0%, 0%); opacity: 1; } } .setting-item input[type=checkbox] { height: 0; width: 0; display: none; } .setting-item label { cursor: pointer; text-indent: -9999px; width: 40px; height: 20px; background: pink; display: block; border-radius: 100px; position: relative; } .setting-item label:after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; background: #fff; border-radius: 90px; transition: 0.2s; } .setting-item input:checked+label { background: #57a; } .setting-item input:checked+label:after { left: calc(100% - 2px); transform: translateX(-100%); } .setting-item label:active:after { width: 28px; } .modal-dialog { pointer-events: auto !important; display:none; border: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; min-width: 100vw; min-height: 100vh; height: 100%; background-color: rgba(0, 0, 0, 0.4); } .modal-setting { width: 450px; margin: auto; background-color: #ffffff; border-radius: 5px; padding: 20px; margin-top: 40px; position: relative; box-sizing: border-box; animation: fall 0.5s ease-in-out; } .modal-header { border-bottom: 1px solid #000000; } .modal-header h3 { padding: 10px 0; margin: 0; } .modal-header span { font-size: 24px; color: #ccc; position: absolute; right: 5px; top: 0; cursor: pointer; } .setting-item { margin: 10px 0; font-size: 14px; display: flex; justify-content: space-between; }`;
 
 	const dStyle = document.createElement("style");
@@ -140,6 +148,40 @@
 		readtimeItem.style.cursor = "pointer";
 		readtimeItem.style.textDecoration = "underline";
 		readtimeItem.addEventListener("click", () => article.scrollIntoView(false));
+	}
+
+	if (features.allow_copy_with_btn.enabled) {
+		const observer = new MutationObserver(() => {
+			const copyBtns = document.querySelectorAll(features.allow_copy_with_btn.selector[0]);
+
+			if (copyBtns.length === 0) {
+				return;
+			}
+
+			console.log(copyBtns);
+
+			copyBtns.forEach((btn) => {
+				btn.onclick = () => {
+					const preBlock = btn.closest("pre");
+					const codeBlock = preBlock.querySelector("code");
+					navigator.clipboard.writeText(codeBlock.innerText);
+					btn.innerText = "已复制";
+					setTimeout(() => (btn.innerText = "复制代码"), 1500);
+				};
+			});
+			observer.disconnect();
+		});
+		observer.observe(document.body, { childList: true, subtree: true });
+	}
+
+	if (features.copyright_text.enabled) {
+		const article = document.querySelector(features.copyright_text.selector[0]);
+		article.addEventListener("copy", (e) => {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			const selectedText = window.getSelection().toString();
+			e.clipboardData.setData("text/plain", selectedText);
+		});
 	}
 
 	if (
