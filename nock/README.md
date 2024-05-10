@@ -88,3 +88,16 @@
 - 右侧回到顶部按钮
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494487-cnblogsnock)
+
+## 掘金
+
+### 功能
+
+- 文章显示时间优化
+- 阅读时长点击跳转到文章底部
+- 隐藏登录提示
+- 隐藏右侧反馈按钮
+- 隐藏右侧更多按钮
+- 隐藏右栏底部群广告
+
+[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494579-juejinnock)
