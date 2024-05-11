@@ -1,4 +1,4 @@
-<div style="text-align:center">
+<div align=center>
 <img src="https://raw.githubusercontent.com/Exisi/BlogNock/main/doc/icon/nock.ico"/>
 <h2>BlogNock</h2>
 
