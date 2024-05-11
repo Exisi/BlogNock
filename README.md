@@ -12,7 +12,8 @@
 - [x] 思否（Segmentfault）
 - [x] 博客园
 - [x] 掘金
-- [ ] 51CTO
+- [x] 51CTO
+- [ ] infoQ
 - [ ] 腾讯云开发者社区
 - [ ] 阿里云开发者社区
 - [ ] 开源中国社区（OSCHINA）
@@ -30,6 +31,7 @@
 | SegmentFaultNock | 思否     | [安装](https://greasyfork.org/zh-CN/scripts/494376-segmentfaultnock) |
 | CnBlogsNock      | 博客园   |   [安装](https://greasyfork.org/zh-CN/scripts/494487-cnblogsnock)    |
 | JueJinNock       | 掘金     |    [安装](https://greasyfork.org/zh-CN/scripts/494579-juejinnock)    |
+| 51CTONock        | 51CTO    |    [安装](https://greasyfork.org/zh-CN/scripts/494665-51ctonock)     |
 
 ### 功能相关
 
