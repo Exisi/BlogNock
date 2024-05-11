@@ -1,6 +1,9 @@
-# BlogNock
+<div style="text-align:center">
+<img src="https://raw.githubusercontent.com/Exisi/BlogNock/main/doc/icon/nock.ico"/>
+<h2>BlogNock</h2>
 
-一个固执己见的中文博客的 [Tampermonkey](https://github.com/search?q=Tampermonkey&type=repositories) 脚本集，致力于提升文章审阅的信息可见性
+<p>一个固执己见的中文博客的 <a href="https://github.com/search?q=Tampermonkey&type=repositories">Tampermonkey</a> 脚本集，致力于提升文章审阅的信息可见性</p>
+</div>
 
 ### Todo
 
