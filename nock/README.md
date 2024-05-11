@@ -103,3 +103,17 @@
 - 隐藏右栏底部群广告
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494579-juejinnock)
+
+## 51CTO
+
+### 功能
+
+- 文章显示时间优化
+- 阅读时长点击跳转到文章底部
+- 文章自由复制
+- 允许一键复制代码
+- 隐藏首次发文提示
+- 隐藏发文任务提示
+- 隐藏右侧迷你按钮图片
+
+[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494665-51ctonock)
