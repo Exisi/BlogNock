@@ -74,6 +74,7 @@
 - 显示历史修改
 - 定位文字调整
 - 点击文章阅读时长跳转文章底部
+- 首次访问不显示登录
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494376-segmentfaultnock)
 
