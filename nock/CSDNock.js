@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CSDNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.9
+// @version      0.1.0
 // @description  BlogNock系列，CSDN文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -63,7 +63,7 @@
 		},
 		allow_copy_with_btn: {
 			enabled: GM_getValue("allow_copy_with_btn", true),
-			selector: [".hljs-button.signin.active"],
+			selector: [".hljs-button.signin.active", "code"],
 		},
 		hidden: {
 			article_search_tip: {
@@ -282,9 +282,12 @@
 		const codeCopyBtns = document.querySelectorAll(features.allow_copy_with_btn.selector[0]);
 		codeCopyBtns.forEach((btn) => {
 			btn.setAttribute("data-title", "复制");
-			btn.onclick = () => {
-				const codeBox = btn.previousSibling;
+			btn.onclick = (e) => {
+				e.stopPropagation();
+				const codeBox = btn.closest(features.allow_copy_with_btn.selector[1]);
 				navigator.clipboard.writeText(codeBox.innerText);
+				btn.setAttribute("data-title", "已复制");
+				setTimeout(() => btn.setAttribute("data-title", "复制"), 1000);
 			};
 		});
 	}
