@@ -2,7 +2,7 @@
 <img src="https://raw.githubusercontent.com/Exisi/BlogNock/main/doc/icon/nock.ico"/>
 <h2>BlogNock</h2>
 
-<p>一个固执己见的中文博客的 <a href="https://github.com/search?q=Tampermonkey&type=repositories">Tampermonkey</a> 脚本集，致力于提升文章审阅的信息可见性</p>
+<p>一个固执己见的中文技术博客的 <a href="https://github.com/search?q=Tampermonkey&type=repositories">Tampermonkey</a> 脚本集，致力于提升文章审阅的信息可见性</p>
 </div>
 
 ### Todo
@@ -16,7 +16,6 @@
 - [x] 博客园
 - [x] 掘金
 - [x] 51CTO
-- [x] infoQ
 - [ ] 腾讯云开发者社区
 - [ ] 阿里云开发者社区
 - [ ] 开源中国社区（OSCHINA）
@@ -35,7 +34,6 @@
 | CnBlogsNock      | 博客园   |   [安装](https://greasyfork.org/zh-CN/scripts/494487-cnblogsnock)    |
 | JueJinNock       | 掘金     |    [安装](https://greasyfork.org/zh-CN/scripts/494579-juejinnock)    |
 | 51CTONock        | 51CTO    |    [安装](https://greasyfork.org/zh-CN/scripts/494665-51ctonock)     |
-| InfoQNock        | InfoQ    |    [安装](https://greasyfork.org/zh-CN/scripts/494901-infoqnock)     |
 
 ### 功能相关
 
