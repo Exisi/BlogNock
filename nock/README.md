@@ -117,3 +117,22 @@
 - 隐藏右侧迷你按钮图片
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494665-51ctonock)
+
+## InfoQ
+
+### 功能
+
+- 文章显示时间优化
+- 阅读时长点击跳转到文章底部
+- 隐藏顶部提示
+- 隐藏底部固定广告
+- 隐藏左侧群推荐
+- 隐藏左侧广告
+- 隐藏左侧推荐阅读的外站文章
+- 隐藏左侧电子书推荐
+- 隐藏左侧 PPT 推荐
+- 隐藏左侧相关厂商推荐
+- 隐藏文章底部广告
+- 隐藏底部外站文章推荐
+
+[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494901-infoqnock)
