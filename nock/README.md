@@ -119,3 +119,20 @@
 - 隐藏右侧迷你按钮图片
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494665-51ctonock)
+
+## 腾讯云开发者社区
+
+### 功能
+
+- 文章显示时间优化
+- 文章阅读时长
+- 隐藏每日活动提示的模态框
+- 隐藏顶部活动广告图片
+- 隐藏右侧领券操作按钮
+- 隐藏右侧群二维码广告
+- 隐藏右侧图片广告
+- 隐藏右侧相关产品和服务
+- 隐藏右侧加入讨论
+- 隐藏右侧相关课程
+
+[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495007-tencentclouddevelopernock)
