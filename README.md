@@ -18,7 +18,7 @@
 - [x] 51CTO
 - [x] 腾讯云开发者社区
 - [x] 阿里云开发者社区
-- [ ] 开源中国社区（OSCHINA）
+- [x] 开源中国社区（OSCHINA）
 
 ### 安装
 
@@ -36,6 +36,7 @@
 | 51CTONock                 | 51CTO            |         [安装](https://greasyfork.org/zh-CN/scripts/494665-51ctonock)         |
 | TencentCloudDeveloperNock | 腾讯云开发者社区 | [安装](https://greasyfork.org/zh-CN/scripts/495007-tencentclouddevelopernock) |
 | AliyunCloudDeveloperNock  | 阿里云开发者社区 | [安装](https://greasyfork.org/zh-CN/scripts/495367-aliyunclouddevelopernock)  |
+| OSChinaNock               | 开源中国博客     |        [安装](https://greasyfork.org/zh-CN/scripts/495384-oschinanock)        |
 
 ### 功能相关
 
