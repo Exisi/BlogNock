@@ -36,7 +36,9 @@
 - 知乎文章按钮位置调整
 - 登录提示自动隐藏
 
-[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)
+### 安装
+
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)
 
 - [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1851)
 
@@ -51,7 +53,7 @@
 
 ### 安装
 
-[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494300-zhihunock-q)
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494300-zhihunock-q)
 
 - [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1848)
 
@@ -69,7 +71,7 @@
 
 ### 安装
 
-[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494159-jianshunock)
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494159-jianshunock)
 
 - [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1852)
 
@@ -83,7 +85,9 @@
 - 点击文章阅读时长跳转文章底部
 - 首次访问不显示登录
 
-[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494376-segmentfaultnock)
+### 安装
+
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494376-segmentfaultnock)
 
 - [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1853)
 
@@ -98,7 +102,9 @@
 - 右侧评论跳转按钮
 - 右侧回到顶部按钮
 
-[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494487-cnblogsnock)
+### 安装
+
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494487-cnblogsnock)
 
 - [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1854)
 
@@ -115,7 +121,9 @@
 - 隐藏右侧更多按钮
 - 隐藏右栏底部群广告
 
-[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494579-juejinnock)
+### 安装
+
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494579-juejinnock)
 
 - [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1855)
 
@@ -131,7 +139,9 @@
 - 隐藏发文任务提示
 - 隐藏右侧迷你按钮图片
 
-[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494665-51ctonock)
+### 安装
+
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494665-51ctonock)
 
 - [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1856)
 
@@ -150,7 +160,9 @@
 - 隐藏右侧加入讨论
 - 隐藏右侧相关课程
 
-[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495007-tencentclouddevelopernock)
+### 安装
+
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495007-tencentclouddevelopernock)
 
 - [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1857)
 
@@ -172,7 +184,9 @@
 - 隐藏文章底部相关实践学习
 - 隐藏文章底部图片广告
 
-[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495367-aliyunclouddevelopernock)
+### 安装
+
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495367-aliyunclouddevelopernock)
 
 - [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1849)
 
@@ -191,7 +205,9 @@
 - 隐藏文章底部热门内容
 - 隐藏文章底部全站热门评论
 
-[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495384-oschinanock)
+### 安装
+
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495384-oschinanock)
 
 - [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1850)
 
@@ -209,6 +225,8 @@
 - 隐藏文章底部热门内容
 - 隐藏文章底部全站热门评论
 
-[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495398-oschinanock-q)
+### 安装
 
-[Greasy Fork 安装](https://scriptcat.org/zh-CN/script-show-page/1858)
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495398-oschinanock-q)
+
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1858)
