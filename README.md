@@ -17,7 +17,7 @@
 - [x] 掘金
 - [x] 51CTO
 - [x] 腾讯云开发者社区
-- [ ] 阿里云开发者社区
+- [x] 阿里云开发者社区
 - [ ] 开源中国社区（OSCHINA）
 
 ### 安装
@@ -35,6 +35,7 @@
 | JueJinNock                | 掘金             |        [安装](https://greasyfork.org/zh-CN/scripts/494579-juejinnock)         |
 | 51CTONock                 | 51CTO            |         [安装](https://greasyfork.org/zh-CN/scripts/494665-51ctonock)         |
 | TencentCloudDeveloperNock | 腾讯云开发者社区 | [安装](https://greasyfork.org/zh-CN/scripts/495007-tencentclouddevelopernock) |
+| AliyunCloudDeveloperNock  | 阿里云开发者社区 | [安装](https://greasyfork.org/zh-CN/scripts/495367-aliyunclouddevelopernock)  |
 
 ### 功能相关
 
