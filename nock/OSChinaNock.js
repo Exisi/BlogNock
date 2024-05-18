@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         OSChinaNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.1
+// @version      0.0.2
 // @description  BlogNock 系列，开源中国（OSChina）文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -33,19 +33,19 @@
 			right_sidebar_popular_info: {
 				enabled: GM_getValue("right_popular_info", true),
 				selector: [
-					".sidebar-section-list .sidebar-section-list--compact.box-card:has(.new-other-list-news)",
+					".sidebar-section-list .sidebar-section-list--compact:has(.new-other-list-news)",
 				],
 			},
 			right_sidebar_recommended_user: {
 				enabled: GM_getValue("right_sidebar_recommended_user", true),
 				selector: [
-					".sidebar-section-list .sidebar-section-list--compact.box-card:has(.section-recommend-blog)",
+					".sidebar-section-list .sidebar-section-list--compact:has(.section-recommend-blog)",
 				],
 			},
 			right_sidebar_popular_software: {
 				enabled: GM_getValue("right_sidebar_popular_software", true),
 				selector: [
-					".sidebar-section-list .sidebar-section-list--compact.box-card:has(.new-other-list-blog)",
+					".sidebar-section-list .sidebar-section-list--compact:has(.new-other-list-blog)",
 				],
 			},
 			right_sidebar_bottom_pic_ad: {
