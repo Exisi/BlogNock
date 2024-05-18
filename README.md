@@ -37,6 +37,7 @@
 | TencentCloudDeveloperNock | 腾讯云开发者社区 | [安装](https://greasyfork.org/zh-CN/scripts/495007-tencentclouddevelopernock) |
 | AliyunCloudDeveloperNock  | 阿里云开发者社区 | [安装](https://greasyfork.org/zh-CN/scripts/495367-aliyunclouddevelopernock)  |
 | OSChinaNock               | 开源中国博客     |        [安装](https://greasyfork.org/zh-CN/scripts/495384-oschinanock)        |
+| OSChinaNock-Q             | 开源中国问答     |       [安装](https://greasyfork.org/zh-CN/scripts/495398-oschinanock-q)       |
 
 ### 功能相关
 
