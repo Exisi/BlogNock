@@ -136,3 +136,23 @@
 - 隐藏右侧相关课程
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495007-tencentclouddevelopernock)
+
+## 阿里云开发者社区
+
+### 功能
+
+- 文章显示时间优化
+- 文章位置图标
+- 文章阅读时长
+- 取消固定文章交互操作按钮
+- 显示返回顶部按钮
+- 隐藏文章相关产品
+- 隐藏右侧相关产品
+- 隐藏右侧相关课程
+- 隐藏右侧相关电子书
+- 隐藏右侧相关实验场景
+- 隐藏右侧反馈操作按钮
+- 隐藏文章底部相关实践学习
+- 隐藏文章底部图片广告
+
+[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495367-aliyunclouddevelopernock)
