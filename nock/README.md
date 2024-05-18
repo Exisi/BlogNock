@@ -24,7 +24,8 @@
 
 ### 安装
 
-[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/493011-csdnock)
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/493011-csdnock)
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1847)
 
 ## ZhihuNock（知乎-专栏)
 
@@ -36,6 +37,8 @@
 - 登录提示自动隐藏
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)
+
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1851)
 
 ## ZhiHuNock-Q（知乎-问答)
 
@@ -49,6 +52,8 @@
 ### 安装
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494300-zhihunock-q)
+
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1848)
 
 ## JianShuNock（简书）
 
@@ -66,6 +71,8 @@
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494159-jianshunock)
 
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1852)
+
 ## SegmentFaultNock（思否）
 
 ### 功能
@@ -77,6 +84,8 @@
 - 首次访问不显示登录
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494376-segmentfaultnock)
+
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1853)
 
 ## CnBlogsNock（博客园）
 
@@ -90,6 +99,8 @@
 - 右侧回到顶部按钮
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494487-cnblogsnock)
+
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1854)
 
 ## JueJinNock（掘金）
 
@@ -106,6 +117,8 @@
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494579-juejinnock)
 
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1855)
+
 ## 51CTONock（51CTO）
 
 ### 功能
@@ -119,6 +132,8 @@
 - 隐藏右侧迷你按钮图片
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494665-51ctonock)
+
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1856)
 
 ## TencentCloudDeveloperNock（腾讯云开发者社区）
 
@@ -136,6 +151,8 @@
 - 隐藏右侧相关课程
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495007-tencentclouddevelopernock)
+
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1857)
 
 ## AliyunCloudDeveloperNock（阿里云开发者社区）
 
@@ -157,6 +174,8 @@
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495367-aliyunclouddevelopernock)
 
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1849)
+
 ## OSChinaNock（开源中国-博客）
 
 ### 功能
@@ -174,6 +193,8 @@
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495384-oschinanock)
 
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1850)
+
 ## OSChinaNock-Q（开源中国-问答）
 
 ### 功能
@@ -189,3 +210,5 @@
 - 隐藏文章底部全站热门评论
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495398-oschinanock-q)
+
+[Greasy Fork 安装](https://scriptcat.org/zh-CN/script-show-page/1858)
