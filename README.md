@@ -7,7 +7,7 @@
 
 ### Todo
 
-预计支持以下博客，施工中...
+支持以下博客站点
 
 - [x] CSDN
 - [x] 知乎
@@ -22,22 +22,22 @@
 
 ### 安装
 
-本脚本发布于 Greasy Fork，您可以通过以下链接安装相关脚本
+本脚本发布于 Greasy Fork 和 ScriptCat，您可以通过以下链接安装相关脚本
 
-| 名称                      | 站点             |                                  Greasy Fork                                  |
-| :------------------------ | :--------------- | :---------------------------------------------------------------------------: |
-| CSDNock                   | CSDN             |          [安装](https://greasyfork.org/zh-CN/scripts/493011-csdnock)          |
-| ZhihuNock                 | 知乎专栏         |         [安装](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)         |
-| ZhihuNock-Q               | 知乎问答         |        [安装](https://greasyfork.org/zh-CN/scripts/494300-zhihunock-q)        |
-| JianShuNock               | 简书             |        [安装](https://greasyfork.org/zh-CN/scripts/494159-jianshunock)        |
-| SegmentFaultNock          | 思否             |     [安装](https://greasyfork.org/zh-CN/scripts/494376-segmentfaultnock)      |
-| CnBlogsNock               | 博客园           |        [安装](https://greasyfork.org/zh-CN/scripts/494487-cnblogsnock)        |
-| JueJinNock                | 掘金             |        [安装](https://greasyfork.org/zh-CN/scripts/494579-juejinnock)         |
-| 51CTONock                 | 51CTO            |         [安装](https://greasyfork.org/zh-CN/scripts/494665-51ctonock)         |
-| TencentCloudDeveloperNock | 腾讯云开发者社区 | [安装](https://greasyfork.org/zh-CN/scripts/495007-tencentclouddevelopernock) |
-| AliyunCloudDeveloperNock  | 阿里云开发者社区 | [安装](https://greasyfork.org/zh-CN/scripts/495367-aliyunclouddevelopernock)  |
-| OSChinaNock               | 开源中国博客     |        [安装](https://greasyfork.org/zh-CN/scripts/495384-oschinanock)        |
-| OSChinaNock-Q             | 开源中国问答     |       [安装](https://greasyfork.org/zh-CN/scripts/495398-oschinanock-q)       |
+| 名称                      | 站点             |                                  Greasy Fork                                  |                         ScriptCat                         |
+| :------------------------ | :--------------- | :---------------------------------------------------------------------------: | :-------------------------------------------------------: |
+| CSDNock                   | CSDN             |          [安装](https://greasyfork.org/zh-CN/scripts/493011-csdnock)          | [安装](https://scriptcat.org/zh-CN/script-show-page/1847) |
+| ZhihuNock                 | 知乎专栏         |         [安装](https://greasyfork.org/zh-CN/scripts/493979-zhihunock)         | [安装](https://scriptcat.org/zh-CN/script-show-page/1851) |
+| ZhihuNock-Q               | 知乎问答         |        [安装](https://greasyfork.org/zh-CN/scripts/494300-zhihunock-q)        | [安装](https://scriptcat.org/zh-CN/script-show-page/1848) |
+| JianShuNock               | 简书             |        [安装](https://greasyfork.org/zh-CN/scripts/494159-jianshunock)        | [安装](https://scriptcat.org/zh-CN/script-show-page/1852) |
+| SegmentFaultNock          | 思否             |     [安装](https://greasyfork.org/zh-CN/scripts/494376-segmentfaultnock)      | [安装](https://scriptcat.org/zh-CN/script-show-page/1853) |
+| CnBlogsNock               | 博客园           |        [安装](https://greasyfork.org/zh-CN/scripts/494487-cnblogsnock)        | [安装](https://scriptcat.org/zh-CN/script-show-page/1854) |
+| JueJinNock                | 掘金             |        [安装](https://greasyfork.org/zh-CN/scripts/494579-juejinnock)         | [安装](https://scriptcat.org/zh-CN/script-show-page/1855) |
+| 51CTONock                 | 51CTO            |         [安装](https://greasyfork.org/zh-CN/scripts/494665-51ctonock)         | [安装](https://scriptcat.org/zh-CN/script-show-page/1856) |
+| TencentCloudDeveloperNock | 腾讯云开发者社区 | [安装](https://greasyfork.org/zh-CN/scripts/495007-tencentclouddevelopernock) | [安装](https://scriptcat.org/zh-CN/script-show-page/1857) |
+| AliyunCloudDeveloperNock  | 阿里云开发者社区 | [安装](https://greasyfork.org/zh-CN/scripts/495367-aliyunclouddevelopernock)  | [安装](https://scriptcat.org/zh-CN/script-show-page/1849) |
+| OSChinaNock               | 开源中国博客     |        [安装](https://greasyfork.org/zh-CN/scripts/495384-oschinanock)        | [安装](https://scriptcat.org/zh-CN/script-show-page/1850) |
+| OSChinaNock-Q             | 开源中国问答     |       [安装](https://greasyfork.org/zh-CN/scripts/495398-oschinanock-q)       | [安装](https://scriptcat.org/zh-CN/script-show-page/1858) |
 
 ### 功能相关
 
