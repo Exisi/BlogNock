@@ -78,7 +78,7 @@
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494376-segmentfaultnock)
 
-## 博客园
+## CnBlogsNock（博客园）
 
 ### 功能
 
@@ -91,7 +91,7 @@
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494487-cnblogsnock)
 
-## 掘金
+## JueJinNock（掘金）
 
 ### 功能
 
@@ -106,7 +106,7 @@
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494579-juejinnock)
 
-## 51CTO
+## 51CTONock（51CTO）
 
 ### 功能
 
@@ -120,7 +120,7 @@
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/494665-51ctonock)
 
-## 腾讯云开发者社区
+## TencentCloudDeveloperNock（腾讯云开发者社区）
 
 ### 功能
 
@@ -137,7 +137,7 @@
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495007-tencentclouddevelopernock)
 
-## 阿里云开发者社区
+## AliyunCloudDeveloperNock（阿里云开发者社区）
 
 ### 功能
 
@@ -156,3 +156,20 @@
 - 隐藏文章底部图片广告
 
 [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495367-aliyunclouddevelopernock)
+
+## OSChinaNock（开源中国-博客）
+
+### 功能
+
+- 文章显示时间优化
+- 文章阅读时长
+- 隐藏右侧顶部图片广告
+- 隐藏右侧底部图片广告
+- 隐藏右侧热门资讯
+- 隐藏右侧推荐关注
+- 隐藏右侧热门软件
+- 隐藏右侧二维码操作按钮
+- 隐藏文章底部热门内容
+- 隐藏文章底部全站热门评论
+
+[Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495384-oschinanock)
