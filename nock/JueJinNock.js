@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JueJinNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.3
+// @version      0.0.4
 // @description  BlogNock系列，掘金文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -23,6 +23,7 @@
 					"script[type='application/ld+json']",
 					".author-info-block",
 					"block-hidden",
+					".meta-box.team .views-count[style]",
 				],
 				icon: `<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><path stroke-width="1.2" d="m2.5.5h12c1.1045695 0 2 .8954305 2 2v12c0 1.1045695-.8954305 2-2 2h-12c-1.1045695 0-2-.8954305-2-2v-12c0-1.1045695.8954305-2 2-2z"/><path d="m.5 4.5h16" stroke-width="1.2"/><path stroke-width="1.2" d="m8.5 7.5v6" transform="matrix(0 1 -1 0 19 2)"/></g></svg>`,
 			},
@@ -124,8 +125,12 @@
 
 		const observer = new MutationObserver(() => {
 			const infoBlock = document.querySelector(features.mark.datetime.selector[2]);
+			if (infoBlock && infoBlock.classList.contains(features.mark.datetime.selector[3])) {
+				return;
+			}
 
-			if (infoBlock.classList.contains(features.mark.datetime.selector[3])) {
+			const viewCountBlock = document.querySelector(features.mark.datetime.selector[4]);
+			if (viewCountBlock && viewCountBlock.style.display == "none") {
 				return;
 			}
 
@@ -157,8 +162,6 @@
 			if (copyBtns.length === 0) {
 				return;
 			}
-
-			console.log(copyBtns);
 
 			copyBtns.forEach((btn) => {
 				btn.onclick = () => {
