@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ZhiHuNock-Q
 // @namespace    http://tampermonkey.net/
-// @version      0.0.6
+// @version      0.0.7
 // @description  BlogNock系列，知乎问答的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -36,6 +36,15 @@
 				"svg[width='26'][height='8']",
 			],
 		},
+		expand_answer_content_without_login: {
+			enabled: GM_getValue("expand_answer_content_without_login", true),
+			selector: [
+				".AppHeader-profileAvatar",
+				".RichContent-inner",
+				".RichContent-inner img",
+				".RichContent",
+			],
+		},
 		hidden_app_qrcode: {
 			enabled: GM_getValue("hidden_app_qrcode", true),
 			selector: [".Card.AppBanner"],
@@ -56,7 +65,7 @@
 		},
 	};
 
-	const setModal = `<div class="modal-dialog"> <div class="modal-setting" onClick="event.cancelBubble = true"> <div class="modal-header"> <h3>功能设置</h3> <span class="btn-dialog-close">×</span> </div> <div class="modal-body"> <div class="setting-item"> <span> 问答显示时间 </span> <span> <input type="checkbox" id="feature-question-datetime" aria-nock="question_datetime" /> <label for="feature-question-datetime"></label> </span> </div> <div class="setting-item"> <span> 登录提示自动隐藏 </span> <span> <input type="checkbox" id="feature-hidden-login" aria-nock="hidden_login" /> <label for="feature-hidden-login"></label> </span> </div> <hr/> <div class="setting-item"> <span> 隐藏左侧移动端推荐 </span> <span> <input type="checkbox" id="feature-hidden-app-qrcode" aria-nock="hidden_app_qrcode" /> <label for="feature-hidden-app-qrcode"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧知乎页脚 </span> <span> <input type="checkbox" id="feature-hidden-footer" aria-nock="hidden_footer" /> <label for="feature-hidden-footer"></label> </span> </div> <div class="setting-item"> <span> 隐藏回答中的广告 </span> <span> <input type="checkbox" id="feature-hidden-answer_ad" aria-nock="answer_ad" /> <label for="feature-hidden-answer_ad"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧边栏的图片广告 </span> <span> <input type="checkbox" id="feature-hidden-sidebar-ad-pic" aria-nock="sidebar_ad_pic" /> <label for="feature-hidden-sidebar-ad-pic"></label> </span> </div> </div> </div> </div>`;
+	const setModal = `<div class="modal-dialog"> <div class="modal-setting" onClick="event.cancelBubble = true"> <div class="modal-header"> <h3>功能设置</h3> <span class="btn-dialog-close">×</span> </div> <div class="modal-body"> <div class="setting-item"> <span> 问答显示时间 </span> <span> <input type="checkbox" id="feature-question-datetime" aria-nock="question_datetime" /> <label for="feature-question-datetime"></label> </span> </div> <div class="setting-item"> <span> 登录提示自动隐藏 </span> <span> <input type="checkbox" id="feature-hidden-login" aria-nock="hidden_login" /> <label for="feature-hidden-login"></label> </span> </div> <div class="setting-item"> <span> 尝试未登录回答自动展开<span style="color: #FF0000;font-size: 12px;">（实现性特性，非全文回答）</span></span> <span> <input type="checkbox" id="feature-expand-answer-content-without-login" aria-nock="expand_answer_content_without_login" /> <label for="feature-expand-answer-content-without-login"></label> </span> </div> <hr /> <div class="setting-item"> <span> 隐藏左侧移动端推荐 </span> <span> <input type="checkbox" id="feature-hidden-app-qrcode" aria-nock="hidden_app_qrcode" /> <label for="feature-hidden-app-qrcode"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧知乎页脚 </span> <span> <input type="checkbox" id="feature-hidden-footer" aria-nock="hidden_footer" /> <label for="feature-hidden-footer"></label> </span> </div> <div class="setting-item"> <span> 隐藏回答中的广告 </span> <span> <input type="checkbox" id="feature-hidden-answer_ad" aria-nock="answer_ad" /> <label for="feature-hidden-answer_ad"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧边栏的图片广告 </span> <span> <input type="checkbox" id="feature-hidden-sidebar-ad-pic" aria-nock="sidebar_ad_pic" /> <label for="feature-hidden-sidebar-ad-pic"></label> </span> </div> </div> </div> </div>`;
 	const setStyle = `@keyframes fall { 0% { transform: translate(0%, -100%); opacity: 0; } 100% { transform: translate(0%, 0%); opacity: 1; } } .setting-item input[type=checkbox] { height: 0; width: 0; display: none; } .setting-item label { cursor: pointer; text-indent: -9999px; width: 40px; height: 20px; background: pink; display: block; border-radius: 100px; position: relative; } .setting-item label:after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; background: #fff; border-radius: 90px; transition: 0.2s; } .setting-item input:checked+label { background: #57a; } .setting-item input:checked+label:after { left: calc(100% - 2px); transform: translateX(-100%); } .setting-item label:active:after { width: 28px; } .modal-dialog { pointer-events: auto !important; display:none; border: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; min-width: 100vw; min-height: 100vh; height: 100%; background-color: rgba(0, 0, 0, 0.4); } .modal-setting { width: 450px; margin: auto; background-color: #ffffff; border-radius: 5px; padding: 20px; margin-top: 40px; position: relative; box-sizing: border-box; animation: fall 0.5s ease-in-out; } .modal-header { border-bottom: 1px solid #000000; } .modal-header h3 { padding: 10px 0; margin: 0; } .modal-header span { font-size: 24px; color: #ccc; position: absolute; right: 5px; top: 0; cursor: pointer; } .setting-item { margin: 10px 0; display: flex; justify-content: space-between; }`;
 
 	const dStyle = document.createElement("style");
@@ -179,6 +188,70 @@
 			document.querySelector(features.hidden_login.selector[3]).closest("div").style.display =
 				"none";
 		});
+	}
+
+	if (
+		features.expand_answer_content_without_login.enabled &&
+		!document.querySelector(features.expand_answer_content_without_login.selector[0])
+	) {
+		const getAnswerLength = () => {
+			const answerContents = document.querySelectorAll(
+				features.expand_answer_content_without_login.selector[1]
+			);
+			return [answerContents.length, answerContents];
+		};
+
+		let [answerLength, answerContents] = getAnswerLength();
+
+		const expandAnswerContent = (answerContents) => {
+			answerContents.forEach((content) => {
+				content.style.maxHeight = "max-content";
+				content.addEventListener("click", (e) => e.stopPropagation());
+			});
+
+			const answerPic = document.querySelectorAll(
+				features.expand_answer_content_without_login.selector[2]
+			);
+			answerPic.forEach((pic) => {
+				pic.addEventListener("click", (e) => e.stopPropagation());
+			});
+
+			const richTextContents = document.querySelectorAll(
+				features.expand_answer_content_without_login.selector[3]
+			);
+			richTextContents.forEach((richText) => {
+				richText.classList.remove("is-collapsed");
+				const expandButton = richText.querySelector(".ContentItem-expandButton");
+
+				if (expandButton) {
+					expandButton.style.display = "none";
+				}
+			});
+
+			answerLength = answerContents.length;
+		};
+
+		expandAnswerContent(answerContents);
+
+		let timerId = null;
+		const observer = new MutationObserver(() => {
+			if (timerId) {
+				return;
+			}
+
+			timerId = setTimeout(() => {
+				let [dynamicAnswerLength, dynamicAnswerContents] = getAnswerLength();
+
+				if (answerLength == dynamicAnswerLength) {
+					return (timerId = null);
+				}
+
+				expandAnswerContent(dynamicAnswerContents);
+				timerId = null;
+			}, 500);
+		});
+
+		observer.observe(document.body, { childList: true, subtree: true });
 	}
 
 	if (
