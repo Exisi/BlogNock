@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ZhiHuNock-Q
 // @namespace    http://tampermonkey.net/
-// @version      0.0.5
+// @version      0.0.6
 // @description  BlogNock系列，知乎问答的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -44,9 +44,19 @@
 			enabled: GM_getValue("hidden_footer", true),
 			selector: ["footer"],
 		},
+		hidden: {
+			answer_ad: {
+				enabled: GM_getValue("answer_ad", true),
+				selector: [".List .Pc-word"],
+			},
+			sidebar_ad_pic: {
+				enabled: GM_getValue("sidebar_ad_pic", true),
+				selector: [".Pc-card.Card"],
+			},
+		},
 	};
 
-	const setModal = `<div class="modal-dialog"> <div class="modal-setting" onClick="event.cancelBubble = true"> <div class="modal-header"> <h3>功能设置</h3> <span class="btn-dialog-close">×</span> </div> <div class="modal-body"> <div class="setting-item"> <span> 问答显示时间 </span> <span> <input type="checkbox" id="feature-question-datetime" aria-nock="question_datetime" /> <label for="feature-question-datetime"></label> </span> </div> <div class="setting-item"> <span> 登录提示自动隐藏 </span> <span> <input type="checkbox" id="feature-hidden-login" aria-nock="hidden_login" /> <label for="feature-hidden-login"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧移动端推荐 </span> <span> <input type="checkbox" id="feature-hidden-app-qrcode" aria-nock="hidden_app_qrcode" /> <label for="feature-hidden-app-qrcode"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧知乎页脚 </span> <span> <input type="checkbox" id="feature-hidden-footer" aria-nock="hidden_footer" /> <label for="feature-hidden-footer"></label> </span> </div> </div> </div> </div>`;
+	const setModal = `<div class="modal-dialog"> <div class="modal-setting" onClick="event.cancelBubble = true"> <div class="modal-header"> <h3>功能设置</h3> <span class="btn-dialog-close">×</span> </div> <div class="modal-body"> <div class="setting-item"> <span> 问答显示时间 </span> <span> <input type="checkbox" id="feature-question-datetime" aria-nock="question_datetime" /> <label for="feature-question-datetime"></label> </span> </div> <div class="setting-item"> <span> 登录提示自动隐藏 </span> <span> <input type="checkbox" id="feature-hidden-login" aria-nock="hidden_login" /> <label for="feature-hidden-login"></label> </span> </div> <hr/> <div class="setting-item"> <span> 隐藏左侧移动端推荐 </span> <span> <input type="checkbox" id="feature-hidden-app-qrcode" aria-nock="hidden_app_qrcode" /> <label for="feature-hidden-app-qrcode"></label> </span> </div> <div class="setting-item"> <span> 隐藏左侧知乎页脚 </span> <span> <input type="checkbox" id="feature-hidden-footer" aria-nock="hidden_footer" /> <label for="feature-hidden-footer"></label> </span> </div> <div class="setting-item"> <span> 隐藏回答中的广告 </span> <span> <input type="checkbox" id="feature-hidden-answer_ad" aria-nock="answer_ad" /> <label for="feature-hidden-answer_ad"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧边栏的图片广告 </span> <span> <input type="checkbox" id="feature-hidden-sidebar-ad-pic" aria-nock="sidebar_ad_pic" /> <label for="feature-hidden-sidebar-ad-pic"></label> </span> </div> </div> </div> </div>`;
 	const setStyle = `@keyframes fall { 0% { transform: translate(0%, -100%); opacity: 0; } 100% { transform: translate(0%, 0%); opacity: 1; } } .setting-item input[type=checkbox] { height: 0; width: 0; display: none; } .setting-item label { cursor: pointer; text-indent: -9999px; width: 40px; height: 20px; background: pink; display: block; border-radius: 100px; position: relative; } .setting-item label:after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; background: #fff; border-radius: 90px; transition: 0.2s; } .setting-item input:checked+label { background: #57a; } .setting-item input:checked+label:after { left: calc(100% - 2px); transform: translateX(-100%); } .setting-item label:active:after { width: 28px; } .modal-dialog { pointer-events: auto !important; display:none; border: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; min-width: 100vw; min-height: 100vh; height: 100%; background-color: rgba(0, 0, 0, 0.4); } .modal-setting { width: 450px; margin: auto; background-color: #ffffff; border-radius: 5px; padding: 20px; margin-top: 40px; position: relative; box-sizing: border-box; animation: fall 0.5s ease-in-out; } .modal-header { border-bottom: 1px solid #000000; } .modal-header h3 { padding: 10px 0; margin: 0; } .modal-header span { font-size: 24px; color: #ccc; position: absolute; right: 5px; top: 0; cursor: pointer; } .setting-item { margin: 10px 0; display: flex; justify-content: space-between; }`;
 
 	const dStyle = document.createElement("style");
@@ -183,6 +193,16 @@
 		const footer = document.querySelector(features.hidden_footer.selector[0]);
 		footer.style.display = "none";
 	}
+
+	const hiddenStyle = document.createElement("style");
+	document.head.appendChild(hiddenStyle);
+
+	Object.entries(features.hidden).forEach(([key, option]) => {
+		if (option.enabled) {
+			const cssRule = `${option.selector} { display: none !important; }`;
+			hiddenStyle.sheet.insertRule(cssRule);
+		}
+	});
 
 	function calculateTimeAgo(datetime) {
 		const SECOND = 1000;
