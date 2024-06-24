@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         TencentCloudDeveloperNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.1
+// @version      0.0.2
 // @description  BlogNock 系列，腾讯云开发者社区文章的标识优化
 // @author       Exisi
 // @license      MIT License
@@ -10,6 +10,8 @@
 // @grant        GM_registerMenuCommand
 // @grant        GM_setValue
 // @grant        GM_getValue
+// @downloadURL https://update.greasyfork.org/scripts/495007/TencentCloudDeveloperNock.user.js
+// @updateURL https://update.greasyfork.org/scripts/495007/TencentCloudDeveloperNock.meta.js
 // ==/UserScript==
 
 (function () {
@@ -30,11 +32,18 @@
 		hidden: {
 			day_loading_activity_modal: {
 				enabled: GM_getValue("day_loading_activity_modal", true),
-				selector: [".cdc-portal-wrapper:has(.mod-activity)"],
+				selector: [
+					".cdc-portal-wrapper:has(.mod-activity)",
+					".cdc-portal-wrapper:has(.cdc-activity-modal)",
+				],
 			},
 			top_activity_ad_pic: {
 				enabled: GM_getValue("top_activity_ad_pic", true),
 				selector: [".cdc-header__capsule"],
+			},
+			right_notice_action_btn: {
+				enabled: GM_getValue("right_notice_action_btn", true),
+				selector: [".cdc-widget-global:has(.announcement)", "#tea-overlay-root"],
 			},
 			right_coupon_action_btn: {
 				enabled: GM_getValue("right_coupon_action_btn", true),
@@ -63,7 +72,7 @@
 		},
 	};
 
-	const setModal = `<div class="modal-dialog"> <div class="modal-setting" onClick="event.cancelBubble = true"> <div class="modal-header"> <h3>功能设置</h3> <span class="btn-dialog-close">×</span> </div> <div class="modal-body"> <div class="setting-item"> <span> 文章显示时间优化 </span> <span> <input type="checkbox" id="feature-mark-datetime" aria-nock="datetime" /> <label for="feature-mark-datetime"></label> </span> </div> <div class="setting-item"> <span> 文章阅读时长 </span> <span> <input type="checkbox" id="feature-mark-readtime" aria-nock="readtime" /> <label for="feature-mark-readtime"></label> </span> </div> <hr /> <div class="setting-item"> <span> 隐藏每日活动提示的模态框 </span> <span> <input type="checkbox" id="feature-hidden-day-loading-activity-modal" aria-nock="day_loading_activity_modal" /> <label for="feature-hidden-day-loading-activity-modal"></label> </span> </div> <div class="setting-item"> <span> 隐藏顶部活动广告图片 </span> <span> <input type="checkbox" id="feature-hidden-top-activity-ad-pic" aria-nock="top_activity_ad_pic" /> <label for="feature-hidden-top-activity-ad-pic"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧领券操作按钮 </span> <span> <input type="checkbox" id="feature-hidden-right-coupon-action-btn" aria-nock="right_coupon_action_btn" /> <label for="feature-hidden-right-coupon-action-btn"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧群二维码广告 </span> <span> <input type="checkbox" id="feature-hidden-right-qrcode-group-ad" aria-nock="right_qrcode_group_ad" /> <label for="feature-hidden-right-qrcode-group-ad"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧图片广告 </span> <span> <input type="checkbox" id="feature-hidden-right-pic-ad" aria-nock="right_pic_ad" /> <label for="feature-hidden-right-pic-ad"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧相关产品和服务 </span> <span> <input type="checkbox" id="feature-hidden-right-related-product-and-service" aria-nock="right_related_product_and_service" /> <label for="feature-hidden-right-related-product-and-service"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧加入讨论 </span> <span> <input type="checkbox" id="feature-hidden-right-discussion-card" aria-nock="right_discussion_card" /> <label for="feature-hidden-right-discussion-card"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧相关课程 </span> <span> <input type="checkbox" id="feature-hidden-right-related-lesson-card" aria-nock="right_related_lesson_card" /> <label for="feature-hidden-right-related-lesson-card"></label> </span> </div> </div> </div> </div>`;
+	const setModal = `<div class="modal-dialog"> <div class="modal-setting" onClick="event.cancelBubble = true"> <div class="modal-header"> <h3>功能设置</h3> <span class="btn-dialog-close">×</span> </div> <div class="modal-body"> <div class="setting-item"> <span> 文章显示时间优化 </span> <span> <input type="checkbox" id="feature-mark-datetime" aria-nock="datetime" /> <label for="feature-mark-datetime"></label> </span> </div> <div class="setting-item"> <span> 文章阅读时长 </span> <span> <input type="checkbox" id="feature-mark-readtime" aria-nock="readtime" /> <label for="feature-mark-readtime"></label> </span> </div> <hr /> <div class="setting-item"> <span> 隐藏每日活动提示的模态框 </span> <span> <input type="checkbox" id="feature-hidden-day-loading-activity-modal" aria-nock="day_loading_activity_modal" /> <label for="feature-hidden-day-loading-activity-modal"></label> </span> </div> <div class="setting-item"> <span> 隐藏顶部活动广告图片 </span> <span> <input type="checkbox" id="feature-hidden-top-activity-ad-pic" aria-nock="top_activity_ad_pic" /> <label for="feature-hidden-top-activity-ad-pic"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧公告提示操作按钮 </span> <span> <input type="checkbox" id="feature-hidden-right-notice-action-btn" aria-nock="right_notice_action_btn" /> <label for="feature-hidden-right-notice-action-btn"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧领券操作按钮 </span> <span> <input type="checkbox" id="feature-hidden-right-coupon-action-btn" aria-nock="right_coupon_action_btn" /> <label for="feature-hidden-right-coupon-action-btn"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧群二维码广告 </span> <span> <input type="checkbox" id="feature-hidden-right-qrcode-group-ad" aria-nock="right_qrcode_group_ad" /> <label for="feature-hidden-right-qrcode-group-ad"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧图片广告 </span> <span> <input type="checkbox" id="feature-hidden-right-pic-ad" aria-nock="right_pic_ad" /> <label for="feature-hidden-right-pic-ad"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧相关产品和服务 </span> <span> <input type="checkbox" id="feature-hidden-right-related-product-and-service" aria-nock="right_related_product_and_service" /> <label for="feature-hidden-right-related-product-and-service"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧加入讨论 </span> <span> <input type="checkbox" id="feature-hidden-right-discussion-card" aria-nock="right_discussion_card" /> <label for="feature-hidden-right-discussion-card"></label> </span> </div> <div class="setting-item"> <span> 隐藏右侧相关课程 </span> <span> <input type="checkbox" id="feature-hidden-right-related-lesson-card" aria-nock="right_related_lesson_card" /> <label for="feature-hidden-right-related-lesson-card"></label> </span> </div> </div> </div> </div>`;
 	const setStyle = `@keyframes fall { 0% { transform: translate(0%, -100%); opacity: 0; } 100% { transform: translate(0%, 0%); opacity: 1; } } .setting-item input[type=checkbox] { height: 0; width: 0; display: none; } .setting-item label { cursor: pointer; text-indent: -9999px; width: 40px; height: 20px; background: pink; display: block; border-radius: 100px; position: relative; } .setting-item label:after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; background: #fff; border-radius: 90px; transition: 0.2s; } .setting-item input:checked+label { background: #57a; } .setting-item input:checked+label:after { left: calc(100% - 2px); transform: translateX(-100%); } .setting-item label:active:after { width: 28px; } .modal-dialog { pointer-events: auto !important; display:none; border: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; min-width: 100vw; min-height: 100vh; height: 100%; background-color: rgba(0, 0, 0, 0.4); } .modal-setting { width: 450px; margin: auto; background-color: #ffffff; border-radius: 5px; padding: 20px; margin-top: 40px; position: relative; box-sizing: border-box; animation: fall 0.5s ease-in-out; } .modal-header { border-bottom: 1px solid #000000; } .modal-header h3 { padding: 10px 0; margin: 0; } .modal-header span { font-size: 24px; color: #ccc; position: absolute; right: 5px; top: 0; cursor: pointer; } .setting-item { margin: 10px 0; font-size: 14px; display: flex; justify-content: space-between; }`;
 
 	const dStyle = document.createElement("style");
