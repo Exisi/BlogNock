@@ -238,3 +238,16 @@
 - [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/495398-oschinanock-q)
 
 - [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1858)
+
+## BiliBiliColumnNock（哔哩哔哩专栏）
+
+### 功能
+
+- 文章显示时间优化
+- 文章阅读时长
+
+### 安装
+
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/521036-bilibilicolumnnock)
+
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/2515/)
