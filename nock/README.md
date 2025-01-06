@@ -151,7 +151,7 @@
 
 - [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1856)
 
-## TencentCloudDeveloperNock（腾讯云开发者社区）
+## TencentCloudDeveloperNock（腾讯云开发者社区文章）
 
 ### 功能
 
