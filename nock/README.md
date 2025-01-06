@@ -174,6 +174,22 @@
 
 - [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/1857)
 
+## TencentCloudDeveloperNock-News（腾讯云开发者社区新闻）
+
+### 功能
+
+- 文章显示时间优化
+- 文章阅读时长
+- 隐藏新闻内容顶部的广告图片
+- 隐藏右侧扫码广告
+- 隐藏右侧扫码悬浮按钮
+
+### 安装
+
+- [Greasy Fork 安装](https://greasyfork.org/zh-CN/scripts/523033-tencentclouddevelopernock-news)
+
+- [ScriptCat 安装](https://scriptcat.org/zh-CN/script-show-page/2614)
+
 ## AliyunCloudDeveloperNock（阿里云开发者社区）
 
 ### 功能
