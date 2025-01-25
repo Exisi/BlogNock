@@ -5,7 +5,7 @@
 <p>一个固执己见的中文技术博客的 <a href="https://github.com/search?q=Tampermonkey&type=repositories">Tampermonkey</a> 脚本集，致力于提升文章审阅的信息可见性</p>
 </div>
 
-### Todo
+### 站点支持
 
 目前已支持以下博客站点
 
@@ -42,6 +42,6 @@
 | OSChinaNock-Q                  | 开源中国问答         |         [安装](https://greasyfork.org/zh-CN/scripts/495398-oschinanock-q)          | [安装](https://scriptcat.org/zh-CN/script-show-page/1858)  |
 | BiliBiliColumnNock             | 哔哩哔哩专栏         |       [安装](https://greasyfork.org/zh-CN/scripts/521036-bilibilicolumnnock)       | [安装](https://scriptcat.org/zh-CN/script-show-page/2515/) |
 
-### 功能相关
+### 功能
 
 所有脚本的详细功能描述，已移动到[此处](https://github.com/Exisi/BlogNock/tree/main/nock/README.md)
