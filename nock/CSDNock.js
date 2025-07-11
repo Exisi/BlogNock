@@ -292,11 +292,11 @@
 			let copyright = document.querySelector(features.mark.copyright.selector[0]);
 			const infoBox = document.querySelector(features.mark.copyright.selector[1]);
 			const sourceUrl = document.querySelector(features.mark.copyright.selector[2]);
-			copyright?.style.visibility = "hidden";
+			copyright.style.visibility = "hidden";
 
 			const iconUrl = copyright.getAttribute("src");
 			const type = iconUrl.substring(iconUrl.lastIndexOf("/") + 1, iconUrl.lastIndexOf("."));
-			infoBox?.innerHTML += `<a href=${sourceUrl}>
+			infoBox.innerHTML += `<a href=${sourceUrl}>
 								<img src=${features.mark.copyright[type]} alt="${type}"
 								style="width:43px; height:43px; position:absolute; top:7px; left:2px"/>
 							 </a>`;
