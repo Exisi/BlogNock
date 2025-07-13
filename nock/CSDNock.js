@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CSDNock
 // @namespace    http://tampermonkey.net/
-// @version      0.1.9
+// @version      0.1.10
 // @icon		 https://raw.githubusercontent.com/Exisi/BlogNock/main/doc/icon/nock.ico
 // @description  BlogNock系列，CSDN文章的标识优化
 // @author       Exisi
@@ -12,6 +12,8 @@
 // @grant        GM_registerMenuCommand
 // @grant        GM_setValue
 // @grant        GM_getValue
+// @downloadURL https://update.greasyfork.org/scripts/493011/CSDNock.user.js
+// @updateURL https://update.greasyfork.org/scripts/493011/CSDNock.meta.js
 // ==/UserScript==
 
 (function () {
@@ -187,12 +189,12 @@
 
 	class ErrorHandler {
 		constructor(customConfig = {}) {
-			const defaultConfig = {
+			const debugConfig = {
 				global: false,
 			};
 
 			// Merge custom configuration
-			this.debugConfig = { ...defaultConfig, ...customConfig };
+			this.debugConfig = { ...debugConfig, ...customConfig };
 		}
 
 		/**
@@ -200,7 +202,7 @@
 		 * @param {Object} newConfig - New configuration
 		 */
 		setConfig(customConfig = {}) {
-			this.config = { ...this.config, ...customConfig };
+			this.debugConfig = { ...this.debugConfig, ...customConfig };
 		}
 
 		/**
@@ -210,7 +212,6 @@
 		 */
 		handleError(error, functionName) {
 			const isDebugMode = this.debugConfig[functionName] || this.debugConfig.global;
-
 			// Re-throw error in debug mode
 			if (isDebugMode) {
 				console.error(`[DEBUG] Error in ${functionName}:`, error);
@@ -245,7 +246,7 @@
 				return {};
 			}
 
-			let customConfig;
+			let customConfig = {};
 
 			function traverse(obj) {
 				Object.keys(obj).forEach((key) => {
@@ -254,8 +255,8 @@
 						const currentKey = key;
 
 						if (value && typeof value === "object" && value.hasOwnProperty("debug")) {
-							if (value.debug === true) {
-								customConfig[currentKey] = false;
+							if (value.debug) {
+								customConfig[currentKey] = true;
 							}
 						}
 
@@ -271,7 +272,7 @@
 		}
 	}
 
-	const errorNock = new ErrorHandler({ global: true });
+	const errorNock = new ErrorHandler();
 	const debugConfig = errorNock.collectDebug(features);
 	errorNock.setConfig(debugConfig);
 
