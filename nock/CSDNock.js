@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CSDNock
 // @namespace    http://tampermonkey.net/
-// @version      0.1.11
+// @version      0.1.12
 // @icon		 https://raw.githubusercontent.com/Exisi/BlogNock/main/doc/icon/nock.ico
 // @description  BlogNock系列，CSDN文章的标识优化
 // @author       Exisi
@@ -29,12 +29,9 @@
 				debug: false,
 				enabled: GM_getValue("copyright", true),
 				selector: [".article-type-img", ".article-info-box", ".article-source-link a"],
-				original:
-					"https://greasyfork.org/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTgyODU2LCJwdXIiOiJibG9iX2lkIn19--bf8a81cd3585e45966da770a24d41931c962feaf/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJwbmciLCJyZXNpemVfdG9fbGltaXQiOlsyMDAsMjAwXX0sInB1ciI6InZhcmlhdGlvbiJ9fQ==--74d795a80595346362306a325643f8710996102f/original.png?locale=zh-CN",
-				reprint:
-					"https://greasyfork.org/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTgyODU4LCJwdXIiOiJibG9iX2lkIn19--72f875da87789db58b6fb06d2daff816e1f573d6/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJwbmciLCJyZXNpemVfdG9fbGltaXQiOlsyMDAsMjAwXX0sInB1ciI6InZhcmlhdGlvbiJ9fQ==--74d795a80595346362306a325643f8710996102f/reprint.png?locale=zh-CN",
-				translate:
-					"https://greasyfork.org/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTgyODYyLCJwdXIiOiJibG9iX2lkIn19--29e83203fb481a249d5eb5b583c2d80bff0c82b2/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJwbmciLCJyZXNpemVfdG9fbGltaXQiOlsyMDAsMjAwXX0sInB1ciI6InZhcmlhdGlvbiJ9fQ==--74d795a80595346362306a325643f8710996102f/translate.png?locale=zh-CN",
+				original: "https://scriptcat.org/api/v2/resource/image/5ts345bqYL3F3Hd8",
+				reprint: "https://scriptcat.org/api/v2/resource/image/4jdyz4euyOHjSPcQ",
+				translate: "https://scriptcat.org/api/v2/resource/image/E7KmWSWcxesn9RrL",
 			},
 			datetime: {
 				debug: false,
