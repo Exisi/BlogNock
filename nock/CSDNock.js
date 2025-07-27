@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CSDNock
 // @namespace    http://tampermonkey.net/
-// @version      0.1.12
+// @version      0.1.13
 // @icon		 https://raw.githubusercontent.com/Exisi/BlogNock/main/doc/icon/nock.ico
 // @description  BlogNock系列，CSDN文章的标识优化
 // @author       Exisi
@@ -247,19 +247,22 @@
 
 			function traverse(obj) {
 				Object.keys(obj).forEach((key) => {
-					if (obj.hasOwnProperty(key)) {
-						const value = obj[key];
-						const currentKey = key;
+					if (!obj.hasOwnProperty(key)) {
+						return;
+					}
 
-						if (value && typeof value === "object" && value.hasOwnProperty("debug")) {
-							if (value.debug) {
-								customConfig[currentKey] = true;
-							}
-						}
+					const value = obj[key];
+					const currentKey = key;
 
-						if (value && typeof value === "object" && !Array.isArray(value)) {
-							traverse(value, currentKey);
-						}
+					const isObj = value && typeof value === "object";
+					const isDebug = value.hasOwnProperty("debug") && value.debug;
+
+					if (isObj && isDebug) {
+						customConfig[currentKey] = true;
+					}
+
+					if (isObj && !Array.isArray(value)) {
+						traverse(value, currentKey);
 					}
 				});
 			}
@@ -273,119 +276,130 @@
 	const debugConfig = errorNock.collectDebug(features);
 	errorNock.setConfig(debugConfig);
 
-	if (features.recommend_type_download.enabled) {
-		errorNock.safeExecute("recommend_type_download", () => {
-			const downloadItemList = document.querySelectorAll(features.recommend_type_download.selector);
-			Array.from(downloadItemList)
-				.filter((item) => {
-					const link = item.querySelector("a")?.href;
-					return link && link.includes("download.csdn");
-				})
-				.forEach((item) => (item.style.display = "none"));
-		});
-	}
+	errorNock.safeExecute("recommend_type_download", () => {
+		if (!features.recommend_type_download.enabled) {
+			return;
+		}
 
-	if (features.mark.copyright.enabled) {
-		errorNock.safeExecute("copyright", () => {
-			let copyright = document.querySelector(features.mark.copyright.selector[0]);
-			const infoBox = document.querySelector(features.mark.copyright.selector[1]);
-			const sourceUrl = document.querySelector(features.mark.copyright.selector[2]);
-			copyright.style.visibility = "hidden";
+		const downloadItemList = document.querySelectorAll(features.recommend_type_download.selector);
+		Array.from(downloadItemList)
+			.filter((item) => {
+				const link = item.querySelector("a")?.href;
+				return link && link.includes("download.csdn");
+			})
+			.forEach((item) => (item.style.display = "none"));
+	});
 
-			const iconUrl = copyright.getAttribute("src");
-			const type = iconUrl.substring(iconUrl.lastIndexOf("/") + 1, iconUrl.lastIndexOf("."));
-			infoBox.innerHTML += `<a href=${sourceUrl}>
+	errorNock.safeExecute("copyright", () => {
+		if (!features.mark.copyright.enabled) {
+			return;
+		}
+
+		let copyright = document.querySelector(features.mark.copyright.selector[0]);
+		const infoBox = document.querySelector(features.mark.copyright.selector[1]);
+		const sourceUrl = document.querySelector(features.mark.copyright.selector[2]);
+		copyright.style.visibility = "hidden";
+
+		const iconUrl = copyright.getAttribute("src");
+		const type = iconUrl.substring(iconUrl.lastIndexOf("/") + 1, iconUrl.lastIndexOf("."));
+		infoBox.innerHTML += `<a href=${sourceUrl}>
 								<img src=${features.mark.copyright[type]} alt="${type}"
 								style="width:43px; height:43px; position:absolute; top:7px; left:2px"/>
 							 </a>`;
+	});
+
+	errorNock.safeExecute("datetime", () => {
+		if (!features.mark.datetime.enabled) {
+			return;
+		}
+
+		const postTime = document.querySelector(features.mark.datetime.selector[0]);
+		const updateTime = document.querySelector(features.mark.datetime.selector[1]) ?? postTime;
+
+		const regex = /\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}/g;
+		let rawPostTime = postTime.innerText.match(regex)[0];
+		let rawUpdateTime = updateTime.innerText.match(regex)[0];
+
+		[rawPostTime, rawUpdateTime] = [rawPostTime, rawUpdateTime].sort(
+			(a, b) => new Date(a) - new Date(b)
+		);
+
+		const postTimeAgo = calculateTimeAgo(rawPostTime);
+		const updateTimeAgo = calculateTimeAgo(rawUpdateTime);
+
+		const formattedPostTime = `发布于 ${rawPostTime}（${postTimeAgo}）`;
+		const formattedUpdateTime = `编辑于 ${rawUpdateTime}（${updateTimeAgo}）`;
+
+		postTime.style.cursor = "pointer";
+		postTime.style.fontSize = "14px";
+		postTime.style.textDecoration = "underline";
+		postTime.innerText = formattedPostTime;
+		postTime.setAttribute("data-time", rawPostTime);
+		postTime.addEventListener("click", () => {
+			const text =
+				postTime.innerText == formattedPostTime ? formattedUpdateTime : formattedPostTime;
+			postTime.innerHTML = text;
 		});
-	}
+	});
 
-	if (features.mark.datetime.enabled) {
-		errorNock.safeExecute("datetime", () => {
-			const postTime = document.querySelector(features.mark.datetime.selector[0]);
-			const updateTime = document.querySelector(features.mark.datetime.selector[1]) ?? postTime;
+	errorNock.safeExecute("readtime", () => {
+		if (!features.mark.readtime.enabled) {
+			return;
+		}
 
-			const regex = /\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}/g;
-			let rawPostTime = postTime.innerText.match(regex)[0];
-			let rawUpdateTime = updateTime.innerText.match(regex)[0];
+		const readbox = document.createElement("span");
+		readbox.style.display = "flex";
+		readbox.style.alignItems = "center";
+		const textCount = document.querySelector(features.mark.readtime.selector[0]).innerText.length;
+		const readtime = textCount / 400;
+		if (readtime >= 1440) {
+			const days = Math.floor(readtime / 1440);
+			readbox.innerHTML = `${features.mark.readtime.icon}<span> 预计阅读时长 ${days} 天</span>`;
+		}
 
-			[rawPostTime, rawUpdateTime] = [rawPostTime, rawUpdateTime].sort(
-				(a, b) => new Date(a) - new Date(b)
-			);
+		if (readtime >= 60) {
+			const hours = Math.floor(readtime / 60);
+			const minutes = Math.floor(readtime % 60);
+			readbox.innerHTML = `${features.mark.readtime.icon}<span> 预计阅读时长 ${hours} 小时 ${minutes} 分钟</span>`;
+		}
 
-			const postTimeAgo = calculateTimeAgo(rawPostTime);
-			const updateTimeAgo = calculateTimeAgo(rawUpdateTime);
+		if (readtime >= 1) {
+			const minutes = Math.round(readtime);
+			readbox.innerHTML = `${features.mark.readtime.icon}<span> 预计阅读时长 ${minutes} 分钟</span>`;
+		}
 
-			const formattedPostTime = `发布于 ${rawPostTime}（${postTimeAgo}）`;
-			const formattedUpdateTime = `编辑于 ${rawUpdateTime}（${updateTimeAgo}）`;
+		if (readtime < 1) {
+			const seconds = Math.round(readtime * 60);
+			readbox.innerHTML = `${features.mark.readtime.icon}<span> 预计阅读时长 ${seconds} 秒</span>`;
+		}
+		const icon = readbox.querySelector("svg");
+		icon.style.width = "14px";
+		icon.style.height = "14px";
+		icon.style.marginRight = "3px";
+		readbox.style.fontSize = "14px";
+		readbox.style.cursor = "pointer";
+		readbox.style.textDecoration = "underline";
+		readbox.addEventListener("click", () =>
+			document.querySelector(features.mark.readtime.selector[2]).scrollIntoView(false)
+		);
+		document.querySelector(features.mark.readtime.selector[1]).appendChild(readbox);
+	});
 
-			postTime.style.cursor = "pointer";
-			postTime.style.fontSize = "14px";
-			postTime.style.textDecoration = "underline";
-			postTime.innerText = formattedPostTime;
-			postTime.setAttribute("data-time", rawPostTime);
-			postTime.addEventListener("click", () => {
-				const text =
-					postTime.innerText == formattedPostTime ? formattedUpdateTime : formattedPostTime;
-				postTime.innerHTML = text;
-			});
-		});
-	}
+	errorNock.safeExecute("source_redirct", () => {
+		if (!features.source_redirct.enabled) {
+			return;
+		}
 
-	if (features.mark.readtime.enabled) {
-		errorNock.safeExecute("readtime", () => {
-			const readbox = document.createElement("span");
-			readbox.style.display = "flex";
-			readbox.style.alignItems = "center";
-			const textCount = document.querySelector(features.mark.readtime.selector[0]).innerText.length;
-			const readtime = textCount / 400;
-			if (readtime >= 1440) {
-				const days = Math.floor(readtime / 1440);
-				readbox.innerHTML = `${features.mark.readtime.icon}<span> 预计阅读时长 ${days} 天</span>`;
-			}
-
-			if (readtime >= 60) {
-				const hours = Math.floor(readtime / 60);
-				const minutes = Math.floor(readtime % 60);
-				readbox.innerHTML = `${features.mark.readtime.icon}<span> 预计阅读时长 ${hours} 小时 ${minutes} 分钟</span>`;
-			}
-
-			if (readtime >= 1) {
-				const minutes = Math.round(readtime);
-				readbox.innerHTML = `${features.mark.readtime.icon}<span> 预计阅读时长 ${minutes} 分钟</span>`;
-			}
-
-			if (readtime < 1) {
-				const seconds = Math.round(readtime * 60);
-				readbox.innerHTML = `${features.mark.readtime.icon}<span> 预计阅读时长 ${seconds} 秒</span>`;
-			}
-			const icon = readbox.querySelector("svg");
-			icon.style.width = "14px";
-			icon.style.height = "14px";
-			icon.style.marginRight = "3px";
-			readbox.style.fontSize = "14px";
-			readbox.style.cursor = "pointer";
-			readbox.style.textDecoration = "underline";
-			readbox.addEventListener("click", () =>
-				document.querySelector(features.mark.readtime.selector[2]).scrollIntoView(false)
-			);
-			document.querySelector(features.mark.readtime.selector[1]).appendChild(readbox);
-		});
-	}
-
-	if (features.source_redirct.enabled) {
-		errorNock.safeExecute("source_redirct", () => {
-			const editStatus = document.querySelector(features.source_redirct.selector[0]);
-			const flag = editStatus.className !== features.source_redirct.selector[0].slice(1);
-			if (flag) {
-				const copyright = document.querySelector(features.source_redirct.selector[1]);
-				const sourceUrl = document.querySelector(features.source_redirct.selector[2]);
-				const iconUrl = copyright.getAttribute("src");
-				const type = iconUrl.substring(iconUrl.lastIndexOf("/") + 1, iconUrl.lastIndexOf("."));
-				if (type === "reprint") {
-					const style = document.createElement("style");
-					style.innerHTML = `
+		const editStatus = document.querySelector(features.source_redirct.selector[0]);
+		const flag = editStatus.className !== features.source_redirct.selector[0].slice(1);
+		if (flag) {
+			const copyright = document.querySelector(features.source_redirct.selector[1]);
+			const sourceUrl = document.querySelector(features.source_redirct.selector[2]);
+			const iconUrl = copyright.getAttribute("src");
+			const type = iconUrl.substring(iconUrl.lastIndexOf("/") + 1, iconUrl.lastIndexOf("."));
+			if (type === "reprint") {
+				const style = document.createElement("style");
+				style.innerHTML = `
 					@keyframes fadeIn {
 						from { opacity: 0; transform: translateX(20px); }
 						to { opacity: 1; transform: translateX(0); }
@@ -395,162 +409,174 @@
 						to { opacity: 0; transform: translateX(20px); }
 					}
 				`;
-					document.head.appendChild(style);
+				document.head.appendChild(style);
 
-					const countdownTips = document.createElement("div");
-					Object.assign(countdownTips.style, {
-						position: "fixed",
-						top: "10px",
-						right: "10px",
-						padding: "15px",
-						backgroundColor: "rgba(0, 0, 0, 0.8)",
-						color: "white",
-						zIndex: "9999",
-						borderRadius: "8px",
-						boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
-						fontFamily: "Arial, sans-serif",
-						animation: "fadeIn 0.3s ease-out",
-					});
-					countdownTips.innerHTML = `
+				const countdownTips = document.createElement("div");
+				Object.assign(countdownTips.style, {
+					position: "fixed",
+					top: "10px",
+					right: "10px",
+					padding: "15px",
+					backgroundColor: "rgba(0, 0, 0, 0.8)",
+					color: "white",
+					zIndex: "9999",
+					borderRadius: "8px",
+					boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+					fontFamily: "Arial, sans-serif",
+					animation: "fadeIn 0.3s ease-out",
+				});
+				countdownTips.innerHTML = `
 					<p style="margin: 0; font-size: 14px;">检测到源链接，<span id="countdown">5</span> 秒后跳转。</p>
 					<button id="cancelButton" style="margin-top: 10px; padding: 5px 10px; background-color: #00a4ff; color: white; border: none; border-radius: 5px; cursor: pointer;">取消</button>
 				`;
-					document.body.appendChild(countdownTips);
+				document.body.appendChild(countdownTips);
 
-					const progressBarContainer = document.createElement("div");
-					Object.assign(progressBarContainer.style, {
-						position: "fixed",
-						top: "0",
-						left: "0",
-						width: "100%",
-						height: "2px",
-						zIndex: "9999",
-					});
-					const progressBar = document.createElement("div");
-					Object.assign(progressBar.style, {
-						width: "100%",
-						height: "100%",
-						backgroundColor: "#00a4ff",
-					});
-					progressBarContainer.appendChild(progressBar);
-					document.body.appendChild(progressBarContainer);
+				const progressBarContainer = document.createElement("div");
+				Object.assign(progressBarContainer.style, {
+					position: "fixed",
+					top: "0",
+					left: "0",
+					width: "100%",
+					height: "2px",
+					zIndex: "9999",
+				});
+				const progressBar = document.createElement("div");
+				Object.assign(progressBar.style, {
+					width: "100%",
+					height: "100%",
+					backgroundColor: "#00a4ff",
+				});
+				progressBarContainer.appendChild(progressBar);
+				document.body.appendChild(progressBarContainer);
 
-					const link = document.createElement("a");
-					link.href = sourceUrl;
-					link.style.display = "none";
-					document.body.appendChild(link);
+				const link = document.createElement("a");
+				link.href = sourceUrl;
+				link.style.display = "none";
+				document.body.appendChild(link);
 
-					let countdown = 5;
-					const countdownInterval = setInterval(() => {
-						countdown -= 0.01;
-						document.getElementById("countdown").innerText = Math.ceil(countdown);
-						progressBar.style.width = `${(countdown / 5) * 100}%`;
-						if (countdown <= 0) {
-							clearInterval(countdownInterval);
-							link.click();
-						}
-					}, 10);
-
-					document.getElementById("cancelButton").addEventListener("click", () => {
+				let countdown = 5;
+				const countdownInterval = setInterval(() => {
+					countdown -= 0.01;
+					document.getElementById("countdown").innerText = Math.ceil(countdown);
+					progressBar.style.width = `${(countdown / 5) * 100}%`;
+					if (countdown <= 0) {
 						clearInterval(countdownInterval);
-						countdownTips.style.animation = "fadeOut 0.3s ease-out";
-						countdownTips.addEventListener("animationend", () => {
-							countdownTips.remove();
-						});
-						progressBarContainer.remove();
-						link.remove();
+						link.click();
+					}
+				}, 10);
+
+				document.getElementById("cancelButton").addEventListener("click", () => {
+					clearInterval(countdownInterval);
+					countdownTips.style.animation = "fadeOut 0.3s ease-out";
+					countdownTips.addEventListener("animationend", () => {
+						countdownTips.remove();
 					});
-				}
+					progressBarContainer.remove();
+					link.remove();
+				});
 			}
-		});
-	}
+		}
+	});
 
-	if (features.unfixed_comment.enabled) {
-		errorNock.safeExecute("unfixed_comment", () => {
-			const style = document.createElement("style");
-			style.textContent = `${features.unfixed_comment.selector[0]}
+	errorNock.safeExecute("unfixed_comment", () => {
+		if (!features.unfixed_comment.enabled) {
+			return;
+		}
+
+		const style = document.createElement("style");
+		style.textContent = `${features.unfixed_comment.selector[0]}
 									{ position: unset !important; }`;
-			document.head.appendChild(style);
+		document.head.appendChild(style);
+	});
+
+	errorNock.safeExecute("hidden_login", () => {
+		if (
+			!features.hidden_login.enabled &&
+			document.querySelector(features.hidden_login.selector[0])
+		) {
+			return;
+		}
+
+		const observer = new MutationObserver(() => {
+			const loginModal = document.querySelector(features.hidden_login.selector[1]);
+
+			if (!loginModal) {
+				return;
+			}
+
+			loginModal.querySelector(features.hidden_login.selector[2]).click();
+			observer.disconnect();
 		});
-	}
+		observer.observe(document.body, { childList: true, subtree: true });
+	});
 
-	if (features.hidden_login.enabled && !document.querySelector(features.hidden_login.selector[0])) {
-		errorNock.safeExecute("hidden_login", () => {
-			const observer = new MutationObserver(() => {
-				const loginModal = document.querySelector(features.hidden_login.selector[1]);
+	errorNock.safeExecute("allow_copy", () => {
+		if (!features.allow_copy.enabled) {
+			return;
+		}
 
-				if (!loginModal) {
-					return;
-				}
-
-				loginModal.querySelector(features.hidden_login.selector[2]).click();
-				observer.disconnect();
-			});
-			observer.observe(document.body, { childList: true, subtree: true });
+		const contentView = document.querySelector(features.allow_copy.selector[0]);
+		contentView.querySelectorAll("*").forEach((content) => {
+			content.oncopy = (e) => e.stopPropagation();
 		});
-	}
 
-	if (features.allow_copy.enabled) {
-		errorNock.safeExecute("allow_copy", () => {
-			const contentView = document.querySelector(features.allow_copy.selector[0]);
-			contentView.querySelectorAll("*").forEach((content) => {
-				content.oncopy = (e) => e.stopPropagation();
-			});
+		const preTags = document.querySelectorAll(features.allow_copy.selector[1]);
+		preTags.forEach((pre) => (pre.style.userSelect = "auto"));
 
-			const preTags = document.querySelectorAll(features.allow_copy.selector[1]);
-			preTags.forEach((pre) => (pre.style.userSelect = "auto"));
+		const codeTags = document.querySelectorAll(features.allow_copy.selector[2]);
+		codeTags.forEach((code) => (code.style.userSelect = "auto"));
+	});
 
-			const codeTags = document.querySelectorAll(features.allow_copy.selector[2]);
-			codeTags.forEach((code) => (code.style.userSelect = "auto"));
+	errorNock.safeExecute("unfold_code", () => {
+		if (!features.unfold_code.enabled) {
+			return;
+		}
+
+		const unfoldCodeBtns = document.querySelectorAll(features.unfold_code.selector[0]);
+		unfoldCodeBtns.forEach((btn) => btn.click());
+	});
+
+	errorNock.safeExecute("allow_copy_with_btn", () => {
+		if (!features.allow_copy_with_btn.enabled) {
+			return;
+		}
+
+		const codeCopyBtns = document.querySelectorAll(features.allow_copy_with_btn.selector[0]);
+		codeCopyBtns.forEach((btn) => {
+			btn.style.display = "none !important";
+			btn.style.position = "absolute";
+			btn.style.zIndex = "-1";
 		});
-	}
 
-	if (features.unfold_code.enabled) {
-		errorNock.safeExecute("unfold_code", () => {
-			const unfoldCodeBtns = document.querySelectorAll(features.unfold_code.selector[0]);
-			unfoldCodeBtns.forEach((btn) => btn.click());
+		const aiCopyBtns = document.querySelectorAll(features.allow_copy_with_btn.selector[1]);
+		aiCopyBtns.forEach((btn) => {
+			btn.innerHTML = "复制";
+			btn.style.paddingLeft = "8px";
+			btn.style.backgroundImage = "none";
+			btn.onclick = (e) => {
+				e.stopPropagation();
+				const codeBox = btn.closest("pre").querySelector(features.allow_copy_with_btn.selector[2]);
+				navigator.clipboard.writeText(codeBox.innerText);
+				btn.innerHTML = "已复制";
+				setTimeout(() => (btn.innerHTML = "复制"), 1000);
+			};
 		});
-	}
+	});
 
-	if (features.allow_copy_with_btn.enabled) {
-		errorNock.safeExecute("allow_copy_with_btn", () => {
-			const codeCopyBtns = document.querySelectorAll(features.allow_copy_with_btn.selector[0]);
-			codeCopyBtns.forEach((btn) => {
-				btn.style.display = "none !important";
-				btn.style.position = "absolute";
-				btn.style.zIndex = "-1";
-			});
+	errorNock.safeExecute("hidden_sidebar", () => {
+		if (!features.hidden_sidebar.enabled) {
+			return;
+		}
 
-			const aiCopyBtns = document.querySelectorAll(features.allow_copy_with_btn.selector[1]);
-			aiCopyBtns.forEach((btn) => {
-				btn.innerHTML = "复制";
-				btn.style.paddingLeft = "8px";
-				btn.style.backgroundImage = "none";
-				btn.onclick = (e) => {
-					e.stopPropagation();
-					const codeBox = btn
-						.closest("pre")
-						.querySelector(features.allow_copy_with_btn.selector[2]);
-					navigator.clipboard.writeText(codeBox.innerText);
-					btn.innerHTML = "已复制";
-					setTimeout(() => (btn.innerHTML = "复制"), 1000);
-				};
-			});
-		});
-	}
-
-	if (features.hidden_sidebar.enabled) {
-		errorNock.safeExecute("hidden_sidebar", () => {
-			const style = document.createElement("style");
-			style.textContent = `${features.hidden_sidebar.selector[0]}
+		const style = document.createElement("style");
+		style.textContent = `${features.hidden_sidebar.selector[0]}
 									{ display: none !important; }`;
-			document.head.appendChild(style);
+		document.head.appendChild(style);
 
-			const main = document.querySelector(features.hidden_sidebar.selector[1]);
-			main.style.display = "flex";
-			main.style.justifyContent = "center";
-		});
-	}
+		const main = document.querySelector(features.hidden_sidebar.selector[1]);
+		main.style.display = "flex";
+		main.style.justifyContent = "center";
+	});
 
 	const hiddenStyle = document.createElement("style");
 	document.head.appendChild(hiddenStyle);
