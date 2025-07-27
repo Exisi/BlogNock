@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CSDNock
 // @namespace    http://tampermonkey.net/
-// @version      0.1.13
+// @version      0.1.14
 // @icon		 https://raw.githubusercontent.com/Exisi/BlogNock/main/doc/icon/nock.ico
 // @description  BlogNock系列，CSDN文章的标识优化
 // @author       Exisi
@@ -12,8 +12,6 @@
 // @grant        GM_registerMenuCommand
 // @grant        GM_setValue
 // @grant        GM_getValue
-// @downloadURL https://update.greasyfork.org/scripts/493011/CSDNock.user.js
-// @updateURL https://update.greasyfork.org/scripts/493011/CSDNock.meta.js
 // ==/UserScript==
 
 (function () {
@@ -143,9 +141,7 @@
 			const modal = document.createElement("div");
 			modal.innerHTML = setModal;
 			document.body.appendChild(modal);
-		}
 
-		init() {
 			this.bindEvents();
 			this.registerContextMenu();
 		}
@@ -157,8 +153,8 @@
 				checkbox.checked = GM_getValue(nock, true);
 			});
 
-			document.querySelector(".modal-dialog").addEventListener("click", closeSetting);
-			document.querySelector(".btn-dialog-close").addEventListener("click", closeSetting);
+			document.querySelector(".modal-dialog").addEventListener("click", this.closeSetting);
+			document.querySelector(".btn-dialog-close").addEventListener("click", this.closeSetting);
 			document.querySelector(".modal-body").addEventListener("click", (e) => {
 				if (e.target.type !== "checkbox") {
 					return;
