@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CSDNock
 // @namespace    http://tampermonkey.net/
-// @version      0.1.14
+// @version      0.2.0
 // @icon		 https://raw.githubusercontent.com/Exisi/BlogNock/main/doc/icon/nock.ico
 // @description  BlogNock系列，CSDN文章的标识优化
 // @author       Exisi
@@ -17,20 +17,17 @@
 (function () {
 	"use strict";
 	const features = {
+		recommend_type_wenku: {
+			debug: false,
+			enabled: GM_getValue("recommend_type_wenku", true),
+			selector: ".recommend-item-box.type_chatgpt.clearfix",
+		},
 		recommend_type_download: {
 			debug: false,
 			enabled: GM_getValue("recommend_type_download", true),
 			selector: ".recommend-item-box.type_download.clearfix",
 		},
 		mark: {
-			copyright: {
-				debug: false,
-				enabled: GM_getValue("copyright", true),
-				selector: [".article-type-img", ".article-info-box", ".article-source-link a"],
-				original: "https://scriptcat.org/api/v2/resource/image/5ts345bqYL3F3Hd8",
-				reprint: "https://scriptcat.org/api/v2/resource/image/4jdyz4euyOHjSPcQ",
-				translate: "https://scriptcat.org/api/v2/resource/image/E7KmWSWcxesn9RrL",
-			},
 			datetime: {
 				debug: false,
 				enabled: GM_getValue("datetime", true),
@@ -39,7 +36,7 @@
 			readtime: {
 				debug: false,
 				enabled: GM_getValue("readtime", true),
-				selector: ["#content_views", ".bar-content", ".blog-content-box"],
+				selector: ["#content_views", ".time", ".blog-content-box"],
 				icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="currentcolor" d="M360 0H24C10.7 0 0 10.7 0 24v16c0 13.3 10.7 24 24 24 0 91 51 167.7 120.8 192C75 280.3 24 357 24 448c-13.3 0-24 10.7-24 24v16c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24v-16c0-13.3-10.7-24-24-24 0-91-51-167.7-120.8-192C309 231.7 360 155 360 64c13.3 0 24-10.7 24-24V24c0-13.3-10.7-24-24-24zm-64 448H88c0-77.5 46.2-144 104-144 57.8 0 104 66.5 104 144z"/></svg>`,
 			},
 		},
@@ -50,7 +47,7 @@
 		},
 		unfixed_comment: {
 			debug: false,
-			enabled: GM_getValue("fixed_comment", true),
+			enabled: GM_getValue("unfixed_comment", true),
 			selector: [".left-toolbox"],
 		},
 		hidden_login: {
@@ -71,7 +68,7 @@
 		allow_copy_with_btn: {
 			debug: false,
 			enabled: GM_getValue("allow_copy_with_btn", true),
-			selector: [".hljs-button.signin.active", "button.btn-code-notes.mdeditor", "code"],
+			selector: [".hljs-button.signin.active", "button.btn-code-notes", "code"],
 		},
 		hidden_sidebar: {
 			debug: false,
@@ -103,36 +100,28 @@
 				enabled: GM_getValue("side_toolbar", true),
 				selector: [".csdn-side-toolbar"],
 			},
-			side_google_ad: {
-				enabled: GM_getValue("side_google_ad", true),
-				selector: [".box-shadow.mb8", "#footerRightAds"],
-			},
-			side_ai_ad: {
-				enabled: GM_getValue("side_ai_ad", true),
-				selector: ["#swiper-remuneration-container"],
-			},
-			write_guide_pic: {
-				enabled: GM_getValue("write_guide_pic", true),
-				selector: ["#asideWriteGuide"],
-			},
-			recommend_vote: {
-				enabled: GM_getValue("recommend_vote", true),
-				selector: ["#asideNewNps"],
-			},
 			latest_comments: {
 				enabled: GM_getValue("latest_comment", true),
 				selector: ["#asideNewComments"],
 			},
-			bottom_recommend_article_vote: {
-				enabled: GM_getValue("bottom_recommend_article_vote", true),
-				selector: ["#recommendNps"],
+			hidden_sidebar_ad: {
+				enabled: GM_getValue("hidden_sidebar_ad", true),
+				selector: ["#footerRightAds"],
+			},
+			hidden_sidebar_remuneration: {
+				enabled: GM_getValue("hidden_sidebar_remuneration", true),
+				selector: [".swiper-slide-box-remuneration"],
+			},
+			sidebar_hot_article: {
+				enabled: GM_getValue("sidebar_hot_article", true),
+				selector: ["#asideHotArticle"],
 			},
 		},
 	};
 
 	class MenuHandler {
 		constructor() {
-			const setModal = `<div class="modal-dialog"><div class="modal-setting"onClick="event.cancelBubble = true"><div class="modal-header"><h3>功能设置</h3><span class="btn-dialog-close">×</span></div><div class="modal-body"><div class="setting-item"><span>替换文章标识图片（原创/转载/翻译）</span><span><input type="checkbox"id="feature-mark-copyright"aria-nock="copyright"/><label for="feature-mark-copyright"></label></span></div><div class="setting-item"><span>文章显示时间优化</span><span><input type="checkbox"id="feature-mark-datetime"aria-nock="datetime"/><label for="feature-mark-datetime"></label></span></div><div class="setting-item"><span>文章阅读时长</span><span><input type="checkbox"id="feature-mark-readtime"aria-nock="readtime"/><label for="feature-mark-readtime"></label></span></div><div class="setting-item"><span>移除底部推荐的CSDN下载</span><span><input type="checkbox"id="feature-recommend-type-download"aria-nock="recommend_type_download"/><label for="feature-recommend-type-download"></label></span></div><div class="setting-item"><span>自动转载原链重定向</span><span><input type="checkbox"id="feature-source-redirct"aria-nock="source_redirct"/><label for="feature-source-redirct"></label></span></div><div class="setting-item"><span>取消固定文章工具栏</span><span><input type="checkbox"id="feature-unfixed-comment"aria-nock="unfixed_comment"/><label for="feature-unfixed-comment"></label></span></div><div class="setting-item"><span>关闭界面加载后的登录模态框</span><span><input type="checkbox"id="feature-hidden-login"aria-nock="hidden_login"/><label for="feature-hidden-login"></label></span></div><hr/><div class="setting-item"><span>文章自由复制</span><span><input type="checkbox"id="feature-allow-copy"aria-nock="allow_copy"/><label for="feature-allow-copy"></label></span></div><div class="setting-item"><span>代码自动展开</span><span><input type="checkbox"id="feature-unfold-code"aria-nock="unfold_code"/><label for="feature-unfold-code"></label></span></div><div class="setting-item"><span>允许一键复制代码</span><span><input type="checkbox"id="feature-allow-copy-with-btn"aria-nock="allow_copy_with_btn"/><label for="feature-allow-copy-with-btn"></label></span></div><hr/><div class="setting-item"><span>隐藏AI搜索按钮</span><span><input type="checkbox"id="feature-hidden-ai-search-btn"aria-nock="ai_search_btn"/><label for="feature-hidden-ai-search-btn"></label></span></div><div class="setting-item"><span>隐藏顶部会员促销</span><span><input type="checkbox"id="feature-hidden-nav-vip-promotion-pic"aria-nock="nav_vip_promotion_pic"/><label for="feature-hidden-nav-vip-promotion-pic"></label></span></div><div class="setting-item"><span>隐藏文本复制的工具栏</span><span><input type="checkbox"id="feature-hidden-article-search-tip"aria-nock="article_search_tip"/><label for="feature-hidden-article-search-tip"></label></span></div><div class="setting-item"><span>隐藏右侧工具栏</span><span><input type="checkbox"id="feature-hidden-side-toolbar"aria-nock="side_toolbar"/><label for="feature-hidden-side-toolbar"></label></span></div><div class="setting-item"><span>隐藏登录提示</span><span><input type="checkbox"id="feature-hidden-login-tips"aria-nock="login_tips"/><label for="feature-hidden-login-tips"></label></span></div><div class="setting-item"><span>隐藏收藏提示</span><span><input type="checkbox"id="feature-hidden-collection-tips"aria-nock="collection_tips"/><label for="feature-hidden-collection-tips"></label></span></div><div class="setting-item"><span>隐藏底部文章推荐评分</span><span><input type="checkbox"id="feature-hidden-bottom-recommend-article-vote"aria-nock="bottom_recommend_article_vote"/><label for="feature-hidden-bottom-recommend-article-vote"></label></span></div><hr/><div class="setting-item"><span>隐藏左侧侧边栏</span><span><input type="checkbox"id="feature-hidden-sidebar"aria-nock="hidden_sidebar"/><label for="feature-hidden-sidebar"></label></span></div><div class="setting-item"><span>隐藏左侧活动图片</span><span><input type="checkbox"id="feature-hidden-write-guide-pic"aria-nock="write_guide_pic"/><label for="feature-hidden-write-guide-pic"></label></span></div><div class="setting-item"><span>隐藏左侧AI活动图片</span><span><input type="checkbox"id="feature-hidden-write-side-ai-ad"aria-nock="side_ai_ad"/><label for="feature-hidden-write-side-ai-ad"></label></span></div><div class="setting-item"><span>隐藏左侧谷歌广告</span><span><input type="checkbox"id="feature-hidden-side-google-ad"aria-nock="side_google_ad"/><label for="feature-hidden-side-google-ad"></label></span></div><div class="setting-item"><span>隐藏左侧推荐评分</span><span><input type="checkbox"id="feature-hidden-recommend-vote"aria-nock="recommend_vote"/><label for="feature-hidden-recommend-vote"></label></span></div><div class="setting-item"><span>隐藏左侧最新评论</span><span><input type="checkbox"id="feature-hidden-latest-comment"aria-nock="latest_comment"/><label for="feature-hidden-latest-comment"></label></span></div></div></div></div>`;
+			const setModal = `<div class="modal-dialog"><div class="modal-setting"onClick="event.cancelBubble = true"><div class="modal-header"><h3>功能设置</h3><span class="btn-dialog-close">×</span></div><div class="modal-body"><div class="setting-item"><span>文章显示时间优化</span><span><input type="checkbox"id="feature-mark-datetime"aria-nock="datetime"/><label for="feature-mark-datetime"></label></span></div><div class="setting-item"><span>文章阅读时长</span><span><input type="checkbox"id="feature-mark-readtime"aria-nock="readtime"/><label for="feature-mark-readtime"></label></span></div><div class="setting-item"><span>移除底部推荐的CSDN下载</span><span><input type="checkbox"id="feature-recommend-type-download"aria-nock="recommend_type_download"/><label for="feature-recommend-type-download"></label></span></div><div class="setting-item"><span>移除底部推荐的CSDN文库文章</span><span><input type="checkbox"id="feature-recommend-type-wenku"aria-nock="recommend_type_wenku"/><label for="feature-recommend-type-wenku"></label></span></div><div class="setting-item"><span>自动转载原链重定向</span><span><input type="checkbox"id="feature-source-redirct"aria-nock="source_redirct"/><label for="feature-source-redirct"></label></span></div><div class="setting-item"><span>取消固定文章工具栏</span><span><input type="checkbox"id="feature-unfixed-comment"aria-nock="unfixed_comment"/><label for="feature-unfixed-comment"></label></span></div><div class="setting-item"><span>关闭界面加载后的登录模态框</span><span><input type="checkbox"id="feature-hidden-login"aria-nock="hidden_login"/><label for="feature-hidden-login"></label></span></div><hr/><div class="setting-item"><span>文章自由复制</span><span><input type="checkbox"id="feature-allow-copy"aria-nock="allow_copy"/><label for="feature-allow-copy"></label></span></div><div class="setting-item"><span>代码自动展开</span><span><input type="checkbox"id="feature-unfold-code"aria-nock="unfold_code"/><label for="feature-unfold-code"></label></span></div><div class="setting-item"><span>允许一键复制代码</span><span><input type="checkbox"id="feature-allow-copy-with-btn"aria-nock="allow_copy_with_btn"/><label for="feature-allow-copy-with-btn"></label></span></div><hr/><div class="setting-item"><span>隐藏AI搜索按钮</span><span><input type="checkbox"id="feature-hidden-ai-search-btn"aria-nock="ai_search_btn"/><label for="feature-hidden-ai-search-btn"></label></span></div><div class="setting-item"><span>隐藏顶部会员促销</span><span><input type="checkbox"id="feature-hidden-nav-vip-promotion-pic"aria-nock="nav_vip_promotion_pic"/><label for="feature-hidden-nav-vip-promotion-pic"></label></span></div><div class="setting-item"><span>隐藏文本复制的工具栏</span><span><input type="checkbox"id="feature-hidden-article-search-tip"aria-nock="article_search_tip"/><label for="feature-hidden-article-search-tip"></label></span></div><div class="setting-item"><span>隐藏右侧工具栏</span><span><input type="checkbox"id="feature-hidden-side-toolbar"aria-nock="side_toolbar"/><label for="feature-hidden-side-toolbar"></label></span></div><div class="setting-item"><span>隐藏登录提示</span><span><input type="checkbox"id="feature-hidden-login-tips"aria-nock="login_tips"/><label for="feature-hidden-login-tips"></label></span></div><div class="setting-item"><span>隐藏收藏提示</span><span><input type="checkbox"id="feature-hidden-collection-tips"aria-nock="collection_tips"/><label for="feature-hidden-collection-tips"></label></span></div><hr/><div class="setting-item"><span>隐藏左侧侧边栏</span><span><input type="checkbox"id="feature-hidden-sidebar"aria-nock="hidden_sidebar"/><label for="feature-hidden-sidebar"></label></span></div><div class="setting-item"><span>隐藏左侧创作助手</span><span><input type="checkbox"id="feature-hidden-sidebar-remuneration"aria-nock="hidden_sidebar_remuneration"/><label for="feature-hidden-sidebar-remuneration"></label></span></div><div class="setting-item"><span>隐藏左侧底部广告</span><span><input type="checkbox"id="feature-hidden-sidebar-ad"aria-nock="hidden_sidebar_ad"/><label for="feature-hidden-sidebar-ad"></label></span></div><div class="setting-item"><span>隐藏左侧热门文章</span><span><input type="checkbox"id="feature-hidden-sidebar-hot-article"aria-nock="sidebar_hot_article"/><label for="feature-hidden-sidebar-hot-article"></label></span></div><div class="setting-item"><span>隐藏左侧最新评论</span><span><input type="checkbox"id="feature-hidden-latest-comment"aria-nock="latest_comment"/><label for="feature-hidden-latest-comment"></label></span></div></div></div></div>`;
 			const setStyle = `@keyframes fall { 0% { transform: translate(0%, -100%); opacity: 0; } 100% { transform: translate(0%, 0%); opacity: 1; } } .setting-item input[type=checkbox] { height: 0; width: 0; display: none; } .setting-item label { cursor: pointer; text-indent: -9999px; width: 40px; height: 20px; background: pink; display: block; border-radius: 100px; position: relative; } .setting-item label:after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; background: #fff; border-radius: 90px; transition: 0.2s; } .setting-item input:checked+label { background: #57a; } .setting-item input:checked+label:after { left: calc(100% - 2px); transform: translateX(-100%); } .setting-item label:active:after { width: 28px; } .modal-dialog { pointer-events: auto !important; display:none; border: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; min-width: 100vw; min-height: 100vh; height: 100%; background-color: rgba(0, 0, 0, 0.4); } .modal-setting { width: 450px; height: 90%; overflow: scroll; margin: auto; background-color: #ffffff; border-radius: 5px; padding: 20px; margin-top: 40px; position: relative; box-sizing: border-box; animation: fall 0.5s ease-in-out; } .modal-header { border-bottom: 1px solid #000000; } .modal-header h3 { padding: 10px 0; margin: 0; } .modal-header span { font-size: 24px; color: #ccc; position: absolute; right: 5px; top: 0; cursor: pointer; } .setting-item { margin: 10px 0; display: flex; justify-content: space-between; }`;
 
 			const dStyle = document.createElement("style");
@@ -272,6 +261,20 @@
 	const debugConfig = errorNock.collectDebug(features);
 	errorNock.setConfig(debugConfig);
 
+	errorNock.safeExecute("recommend_type_wenku", () => {
+		if (!features.recommend_type_wenku.enabled) {
+			return;
+		}
+
+		const downloadItemList = document.querySelectorAll(features.recommend_type_wenku.selector);
+		Array.from(downloadItemList)
+			.filter((item) => {
+				const link = item.querySelector("a")?.href;
+				return link && link.includes("wenku.csdn");
+			})
+			.forEach((item) => (item.style.display = "none"));
+	});
+
 	errorNock.safeExecute("recommend_type_download", () => {
 		if (!features.recommend_type_download.enabled) {
 			return;
@@ -284,24 +287,6 @@
 				return link && link.includes("download.csdn");
 			})
 			.forEach((item) => (item.style.display = "none"));
-	});
-
-	errorNock.safeExecute("copyright", () => {
-		if (!features.mark.copyright.enabled) {
-			return;
-		}
-
-		let copyright = document.querySelector(features.mark.copyright.selector[0]);
-		const infoBox = document.querySelector(features.mark.copyright.selector[1]);
-		const sourceUrl = document.querySelector(features.mark.copyright.selector[2]);
-		copyright.style.visibility = "hidden";
-
-		const iconUrl = copyright.getAttribute("src");
-		const type = iconUrl.substring(iconUrl.lastIndexOf("/") + 1, iconUrl.lastIndexOf("."));
-		infoBox.innerHTML += `<a href=${sourceUrl}>
-								<img src=${features.mark.copyright[type]} alt="${type}"
-								style="width:43px; height:43px; position:absolute; top:7px; left:2px"/>
-							 </a>`;
 	});
 
 	errorNock.safeExecute("datetime", () => {
@@ -378,7 +363,7 @@
 		readbox.addEventListener("click", () =>
 			document.querySelector(features.mark.readtime.selector[2]).scrollIntoView(false)
 		);
-		document.querySelector(features.mark.readtime.selector[1]).appendChild(readbox);
+		document.querySelector(features.mark.readtime.selector[1]).after(readbox);
 	});
 
 	errorNock.safeExecute("source_redirct", () => {
