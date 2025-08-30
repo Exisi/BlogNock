@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ZhiHuNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.9
+// @version      0.0.10
 // @icon		 https://raw.githubusercontent.com/Exisi/BlogNock/main/doc/icon/nock.ico
 // @description  BlogNock系列，知乎文章的标识优化
 // @author       Exisi
@@ -30,7 +30,12 @@
 		},
 		hidden_login: {
 			enabled: GM_getValue("login_hidden", true),
-			selector: [".AppHeader-profileAvatar", ".Modal-closeButton", ".ZDI--Xmark16"],
+			selector: [
+				".AppHeader-profileAvatar",
+				".Modal-closeButton",
+				".ZDI--Xmark16",
+				".Button--blue",
+			],
 		},
 	};
 
@@ -179,6 +184,21 @@
 		});
 
 		observer.observe(document.body, { childList: true, subtree: true });
+
+		const obr = new MutationObserver(() => {
+			const button = Array.from(document.querySelectorAll(features.hidden_login.selector[3])).find(
+				(btn) => btn.textContent.includes("立即登录/注册")
+			);
+
+			if (!button) {
+				return;
+			}
+
+			button.parentNode.parentNode.parentNode.style.display = "none";
+			obr.disconnect();
+		});
+
+		obr.observe(document.body, { childList: true, subtree: true });
 	}
 
 	messageblock.style.display = "flex";
