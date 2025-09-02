@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JueJinNock
 // @namespace    https://github.com/Exisi/BlogNock
-// @version      0.0.8
+// @version      0.0.9
 // @icon		 https://raw.githubusercontent.com/Exisi/BlogNock/main/doc/icon/nock.ico
 // @description  BlogNock系列，掘金文章的标识优化
 // @author       Exisi
@@ -46,13 +46,13 @@
 			selector: [".avatar-wrapper", ".bottom-login-guide"],
 		},
 		hidden: {
-			ai_assistant_notification: {
-				enabled: GM_getValue("ai_assistant_notification", true),
-				selector: [".ai-assistant-notification"],
+			action_ai_btn: {
+				enabled: GM_getValue("action_ai_btn", true),
+				selector: [".btn-ai"],
 			},
 			special_activity: {
 				enabled: GM_getValue("special_activity", true),
-				selector: [".special-activity-item"],
+				selector: [".special-activity-item", ".top-banners-container"],
 			},
 			feedback_btn: {
 				enabled: GM_getValue("feedback_btn", true),
@@ -68,12 +68,12 @@
 			},
 			ad_article_top: {
 				enabled: GM_getValue("ad_article_top", true),
-				selector: ["article img[src^='https://p9-piu.byteimg.com']"],
+				selector: ["article img[src*='-piu.byteimg.com']"],
 			},
 		},
 	};
 
-	const setModal = `<div class=modal-dialog><div class=modal-setting onclick="event.cancelBubble=!0"><div class=modal-header><h3>功能设置</h3><span class=btn-dialog-close>×</span></div><div class=modal-body><div class=setting-item><span>文章显示时间优化 </span><span><input aria-nock=datetime id=feature-mark-datetime type=checkbox> <label for=feature-mark-datetime></label></span></div><div class=setting-item><span>阅读时长点击跳转到文章底部 </span><span><input aria-nock=readtime id=feature-mark-readtime type=checkbox> <label for=feature-mark-readtime></label></span></div><div class=setting-item><span>允许一键复制代码 </span><span><input aria-nock=allow_copy_with_btn id=feature-allow-copy-with-btn type=checkbox> <label for=feature-allow-copy-with-btn></label></span></div><div class=setting-item><span>移除复制附加的版权声明 </span><span><input aria-nock=copyright_text id=feature-copyright-text type=checkbox> <label for=feature-copyright-text></label></span></div><hr><div class=setting-item><span>隐藏登录提示 </span><span><input aria-nock=hidden_login_tips id=feature-hidden-login-tips type=checkbox> <label for=feature-hidden-login-tips></label></span></div><div class=setting-item><span>隐藏界面首次加载时右侧的 AI 助手提示 </span><span><input aria-nock=ai_assistant_notification id=feature-hidden-ai-assistant-notification type=checkbox> <label for=feature-hidden-ai-assistant-notification></label></span></div><div class=setting-item><span>隐藏顶部活动图片 </span><span><input aria-nock=special_activity id=feature-hidden-special-activity type=checkbox> <label for=feature-hidden-special-activity></label></span></div><div class=setting-item><span>隐藏右侧反馈按钮 </span><span><input aria-nock=feedback_btn id=feature-hidden-feedback-btn type=checkbox> <label for=feature-hidden-feedback-btn></label></span></div><div class=setting-item><span>隐藏右侧更多按钮 </span><span><input aria-nock=more_btn id=feature-hidden-more-btn type=checkbox> <label for=feature-hidden-more-btn></label></span></div><div class=setting-item><span>隐藏右栏底部群广告 </span><span><input aria-nock=ad_container id=feature-hidden-ad-container type=checkbox> <label for=feature-hidden-ad-container></label></span></div><div class=setting-item><span>隐藏文章顶部图片广告 </span><span><input aria-nock=ad_article_top id=feature-hidden-ad-article-top type=checkbox> <label for=feature-hidden-ad-article-top></label></span></div></div></div></div>`;
+	const setModal = `<div class=modal-dialog><div class=modal-setting onclick="event.cancelBubble=!0"><div class=modal-header><h3>功能设置</h3><span class=btn-dialog-close>×</span></div><div class=modal-body><div class=setting-item><span>文章显示时间优化 </span><span><input aria-nock=datetime id=feature-mark-datetime type=checkbox> <label for=feature-mark-datetime></label></span></div><div class=setting-item><span>阅读时长点击跳转到文章底部 </span><span><input aria-nock=readtime id=feature-mark-readtime type=checkbox> <label for=feature-mark-readtime></label></span></div><div class=setting-item><span>允许一键复制代码 </span><span><input aria-nock=allow_copy_with_btn id=feature-allow-copy-with-btn type=checkbox> <label for=feature-allow-copy-with-btn></label></span></div><div class=setting-item><span>移除复制附加的版权声明 </span><span><input aria-nock=copyright_text id=feature-copyright-text type=checkbox> <label for=feature-copyright-text></label></span></div><hr><div class=setting-item><span>隐藏登录提示 </span><span><input aria-nock=hidden_login_tips id=feature-hidden-login-tips type=checkbox> <label for=feature-hidden-login-tips></label></span></div><div class=setting-item><span>隐藏右侧AI助手按钮 </span><span><input aria-nock=action_ai_btn id=feature-hidden-ai-assistant-notification type=checkbox> <label for=feature-hidden-ai-assistant-notification></label></span></div><div class=setting-item><span>隐藏顶部活动图片 </span><span><input aria-nock=special_activity id=feature-hidden-special-activity type=checkbox> <label for=feature-hidden-special-activity></label></span></div><div class=setting-item><span>隐藏右侧反馈按钮 </span><span><input aria-nock=feedback_btn id=feature-hidden-feedback-btn type=checkbox> <label for=feature-hidden-feedback-btn></label></span></div><div class=setting-item><span>隐藏右侧更多按钮 </span><span><input aria-nock=more_btn id=feature-hidden-more-btn type=checkbox> <label for=feature-hidden-more-btn></label></span></div><div class=setting-item><span>隐藏右栏底部群广告 </span><span><input aria-nock=ad_container id=feature-hidden-ad-container type=checkbox> <label for=feature-hidden-ad-container></label></span></div><div class=setting-item><span>隐藏文章顶部图片广告 </span><span><input aria-nock=ad_article_top id=feature-hidden-ad-article-top type=checkbox> <label for=feature-hidden-ad-article-top></label></span></div></div></div></div>`;
 	const setStyle = `@keyframes fall { 0% { transform: translate(0%, -100%); opacity: 0; } 100% { transform: translate(0%, 0%); opacity: 1; } } .setting-item input[type=checkbox] { height: 0; width: 0; display: none; } .setting-item label { cursor: pointer; text-indent: -9999px; width: 40px; height: 20px; background: pink; display: block; border-radius: 100px; position: relative; } .setting-item label:after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; background: #fff; border-radius: 90px; transition: 0.2s; } .setting-item input:checked+label { background: #57a; } .setting-item input:checked+label:after { left: calc(100% - 2px); transform: translateX(-100%); } .setting-item label:active:after { width: 28px; } .modal-dialog { pointer-events: auto !important; display:none; border: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; min-width: 100vw; min-height: 100vh; height: 100%; background-color: rgba(0, 0, 0, 0.4); } .modal-setting { width: 450px; margin: auto; background-color: #ffffff; border-radius: 5px; padding: 20px; margin-top: 40px; position: relative; box-sizing: border-box; animation: fall 0.5s ease-in-out; } .modal-header { border-bottom: 1px solid #000000; } .modal-header h3 { padding: 10px 0; margin: 0; } .modal-header span { font-size: 24px; color: #ccc; position: absolute; right: 5px; top: 0; cursor: pointer; } .setting-item { margin: 10px 0; font-size: 14px; display: flex; justify-content: space-between; }`;
 
 	const dStyle = document.createElement("style");
