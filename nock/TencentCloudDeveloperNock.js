@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         TencentCloudDeveloperNock
 // @namespace    https://github.com/Exisi/BlogNock
-// @version      0.0.7
+// @version      0.0.8
 // @icon		 https://raw.githubusercontent.com/Exisi/BlogNock/main/doc/icon/nock.ico
 // @description  BlogNock 系列，腾讯云开发者社区文章的标识优化
 // @author       Exisi
@@ -44,23 +44,15 @@
 			},
 			top_product_ad_pic: {
 				enabled: GM_getValue("top_product_ad_pic", true),
-				selector: ["#community-top-header-product-container:has(.cdc-top-ad)"],
+				selector: [".cdc-top-ad"],
 			},
 			top_activity_ad_pic: {
 				enabled: GM_getValue("top_activity_ad_pic", true),
-				selector: [".cdc-header__capsule"],
-			},
-			right_notice_action_btn: {
-				enabled: GM_getValue("right_notice_action_btn", true),
-				selector: [".cdc-widget-global:has(.announcement)", "#tea-overlay-root"],
+				selector: ["#private-domain-aside"],
 			},
 			right_coupon_action_btn: {
 				enabled: GM_getValue("right_coupon_action_btn", true),
 				selector: [".cdc-widget-global__btn:has(.cdc-widget-global__btn-tag)"],
-			},
-			right_qrcode_group_ad: {
-				enabled: GM_getValue("right_qrcode_group_ad", true),
-				selector: [".cdc-commercial-card.mod-group-card"],
 			},
 			right_pic_ad: {
 				enabled: GM_getValue("right_pic_ad", true),
@@ -69,26 +61,18 @@
 					".cdc-commercial-card:has(img[class*='ad-image'])",
 				],
 			},
+			right_qrcode_group_ad: {
+				enabled: GM_getValue("right_qrcode_group_ad", true),
+				selector: [".cdc-commercial-card.mod-group-card"],
+			},
 			right_related_product_and_service: {
 				enabled: GM_getValue("right_related_product_and_service", true),
 				selector: [".cdc-mod-product2:has(.cdc-product-info2__list)"],
 			},
-			right_discussion_card: {
-				enabled: GM_getValue("right_discussion_card", true),
-				selector: [".cdc-discussion-card:has(.cdc-discussion-card__recommend)"],
-			},
-			right_related_lesson_card: {
-				enabled: GM_getValue("right_related_lesson_card", true),
-				selector: [".cdc-free-course-card:has(.cdc-free-course-card__detail)"],
-			},
-			left_corner_bubble_card: {
-				enabled: GM_getValue("left_corner_bubble_card", true),
-				selector: [".cdc-dark-tip-bubble"],
-			},
 		},
 	};
 
-	const setModal = `<div class=modal-dialog><div class=modal-setting onclick="event.cancelBubble=!0"><div class=modal-header><h3>功能设置</h3><span class=btn-dialog-close>×</span></div><div class=modal-body><div class=setting-item><span>文章显示时间优化 </span><span><input aria-nock=datetime id=feature-mark-datetime type=checkbox> <label for=feature-mark-datetime></label></span></div><div class=setting-item><span>文章阅读时长 </span><span><input aria-nock=readtime id=feature-mark-readtime type=checkbox> <label for=feature-mark-readtime></label></span></div><hr><div class=setting-item><span>停止文章左侧按钮图标动画 </span><span><input aria-nock=left_emoji_animation id=feature-sleep-left-emoji-animation type=checkbox> <label for=feature-sleep-left-emoji-animation></label></span></div><hr><div class=setting-item><span>隐藏每日活动提示的模态框 </span><span><input aria-nock=day_loading_activity_modal id=feature-hidden-day-loading-activity-modal type=checkbox> <label for=feature-hidden-day-loading-activity-modal></label></span></div><div class=setting-item><span>隐藏顶部产品广告图片 </span><span><input aria-nock=top_product_ad_pic id=feature-hidden-top-product-ad-pic type=checkbox> <label for=feature-hidden-top-product-ad-pic></label></span></div><div class=setting-item><span>隐藏顶部活动广告图片 </span><span><input aria-nock=top_activity_ad_pic id=feature-hidden-top-activity-ad-pic type=checkbox> <label for=feature-hidden-top-activity-ad-pic></label></span></div><div class=setting-item><span>隐藏右侧公告提示操作按钮 </span><span><input aria-nock=right_notice_action_btn id=feature-hidden-right-notice-action-btn type=checkbox> <label for=feature-hidden-right-notice-action-btn></label></span></div><div class=setting-item><span>隐藏右侧领券操作按钮 </span><span><input aria-nock=right_coupon_action_btn id=feature-hidden-right-coupon-action-btn type=checkbox> <label for=feature-hidden-right-coupon-action-btn></label></span></div><div class=setting-item><span>隐藏右侧群二维码广告 </span><span><input aria-nock=right_qrcode_group_ad id=feature-hidden-right-qrcode-group-ad type=checkbox> <label for=feature-hidden-right-qrcode-group-ad></label></span></div><div class=setting-item><span>隐藏右侧图片广告 </span><span><input aria-nock=right_pic_ad id=feature-hidden-right-pic-ad type=checkbox> <label for=feature-hidden-right-pic-ad></label></span></div><div class=setting-item><span>隐藏右侧相关产品和服务 </span><span><input aria-nock=right_related_product_and_service id=feature-hidden-right-related-product-and-service type=checkbox> <label for=feature-hidden-right-related-product-and-service></label></span></div><div class=setting-item><span>隐藏右侧加入讨论 </span><span><input aria-nock=right_discussion_card id=feature-hidden-right-discussion-card type=checkbox> <label for=feature-hidden-right-discussion-card></label></span></div><div class=setting-item><span>隐藏右侧相关课程 </span><span><input aria-nock=right_related_lesson_card id=feature-hidden-right-related-lesson-card type=checkbox> <label for=feature-hidden-right-related-lesson-card></label></span></div><div class=setting-item><span>隐藏界面左下角弹出卡片 </span><span><input aria-nock=left_corner_bubble_card id=feature-hidden-left-corner-bubble-card type=checkbox> <label for=feature-hidden-left-corner-bubble-card></label></span></div></div></div></div>`;
+	const setModal = `<div class="modal-dialog"><div class="modal-setting"onclick="event.cancelBubble=!0"><div class="modal-header"><h3>功能设置</h3><span class="btn-dialog-close">×</span></div><div class="modal-body"><div class="setting-item"><span>文章显示时间优化</span><span><input aria-nock="datetime"id="feature-mark-datetime"type="checkbox"/><label for="feature-mark-datetime"></label></span></div><div class="setting-item"><span>文章阅读时长</span><span><input aria-nock="readtime"id="feature-mark-readtime"type="checkbox"/><label for="feature-mark-readtime"></label></span></div><hr/><div class="setting-item"><span>停止文章左侧按钮图标动画</span><span><input aria-nock="left_emoji_animation"id="feature-sleep-left-emoji-animation"type="checkbox"/><label for="feature-sleep-left-emoji-animation"></label></span></div><hr/><div class="setting-item"><span>隐藏每日活动提示的模态框</span><span><input aria-nock="day_loading_activity_modal"id="feature-hidden-day-loading-activity-modal"type="checkbox"/><label for="feature-hidden-day-loading-activity-modal"></label></span></div><div class="setting-item"><span>隐藏顶部产品广告图片</span><span><input aria-nock="top_product_ad_pic"id="feature-hidden-top-product-ad-pic"type="checkbox"/><label for="feature-hidden-top-product-ad-pic"></label></span></div><div class="setting-item"><span>隐藏顶部活动广告图片</span><span><input aria-nock="top_activity_ad_pic"id="feature-hidden-top-activity-ad-pic"type="checkbox"/><label for="feature-hidden-top-activity-ad-pic"></label></span></div><div class="setting-item"><span>隐藏右侧领券操作按钮</span><span><input aria-nock="right_coupon_action_btn"id="feature-hidden-right-coupon-action-btn"type="checkbox"/><label for="feature-hidden-right-coupon-action-btn"></label></span></div><div class="setting-item"><span>隐藏右侧群二维码广告</span><span><input aria-nock="right_qrcode_group_ad"id="feature-hidden-right-qrcode-group-ad"type="checkbox"/><label for="feature-hidden-right-qrcode-group-ad"></label></span></div><div class="setting-item"><span>隐藏右侧图片广告</span><span><input aria-nock="right_pic_ad"id="feature-hidden-right-pic-ad"type="checkbox"/><label for="feature-hidden-right-pic-ad"></label></span></div><div class="setting-item"><span>隐藏右侧相关产品和服务</span><span><input aria-nock="right_related_product_and_service"id="feature-hidden-right-related-product-and-service"type="checkbox"/><label for="feature-hidden-right-related-product-and-service"></label></span></div></div></div></div>`;
 	const setStyle = `@keyframes fall { 0% { transform: translate(0%, -100%); opacity: 0; } 100% { transform: translate(0%, 0%); opacity: 1; } } .setting-item input[type=checkbox] { height: 0; width: 0; display: none; } .setting-item label { cursor: pointer; text-indent: -9999px; width: 40px; height: 20px; background: pink; display: block; border-radius: 100px; position: relative; } .setting-item label:after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; background: #fff; border-radius: 90px; transition: 0.2s; } .setting-item input:checked+label { background: #57a; } .setting-item input:checked+label:after { left: calc(100% - 2px); transform: translateX(-100%); } .setting-item label:active:after { width: 28px; } .modal-dialog { pointer-events: auto !important; display:none; border: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; min-width: 100vw; min-height: 100vh; height: 100%; background-color: rgba(0, 0, 0, 0.4); } .modal-setting { width: 450px; margin: auto; background-color: #ffffff; border-radius: 5px; padding: 20px; margin-top: 40px; position: relative; box-sizing: border-box; animation: fall 0.5s ease-in-out; } .modal-header { border-bottom: 1px solid #000000; } .modal-header h3 { padding: 10px 0; margin: 0; } .modal-header span { font-size: 24px; color: #ccc; position: absolute; right: 5px; top: 0; cursor: pointer; } .setting-item { margin: 10px 0; font-size: 14px; display: flex; justify-content: space-between; }`;
 
 	const dStyle = document.createElement("style");
