@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ZhiHuNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.10
+// @version      0.0.11
 // @icon		 https://raw.githubusercontent.com/Exisi/BlogNock/main/doc/icon/nock.ico
 // @description  BlogNock系列，知乎文章的标识优化
 // @author       Exisi
@@ -139,7 +139,7 @@
 		readbox.style.alignItems = "center";
 		readbox.style.cursor = "pointer";
 		readbox.addEventListener("click", () =>
-			document.querySelector(features.mark.readtime.selector[1]).scrollIntoView(false)
+			document.querySelector(features.mark.readtime.selector[1]).scrollIntoView(false),
 		);
 
 		const icon = readbox.querySelector("svg");
@@ -168,6 +168,10 @@
 
 		createObserver(features.hidden_login.selector[1], () => {
 			document.querySelector(features.hidden_login.selector[1]).click();
+
+			setTimeout(() => {
+				document.querySelector(features.hidden_login.selector[1]).click();
+			}, 0);
 		});
 
 		const observer = new MutationObserver(() => {
@@ -176,6 +180,8 @@
 			if (closeBtn.length <= 0) {
 				return;
 			}
+
+			document.querySelector(features.hidden_login.selector[1]).click();
 
 			closeBtn.forEach((btn) => {
 				btn.parentNode.parentNode.parentNode.style.display = "none";
@@ -187,7 +193,7 @@
 
 		const obr = new MutationObserver(() => {
 			const button = Array.from(document.querySelectorAll(features.hidden_login.selector[3])).find(
-				(btn) => btn.textContent.includes("立即登录/注册")
+				(btn) => btn.textContent.includes("立即登录/注册"),
 			);
 
 			if (!button) {
