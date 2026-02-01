@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ZhiHuNock
 // @namespace    http://tampermonkey.net/
-// @version      0.0.11
+// @version      0.0.12
 // @icon		 https://raw.githubusercontent.com/Exisi/BlogNock/main/doc/icon/nock.ico
 // @description  BlogNock系列，知乎文章的标识优化
 // @author       Exisi
